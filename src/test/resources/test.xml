@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="example" verbose="1" parallel="tests" thread-count="10">
+
+    <test name="1">
+        <classes>
+            <class name="com.wiley.FirstTest"/>
+        </classes>
+    </test>
+
+    <test name="2">
+        <classes>
+            <class name="com.wiley.SecondTest"/>
+        </classes>
+    </test>
+
+</suite>
