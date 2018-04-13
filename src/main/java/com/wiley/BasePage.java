@@ -18,8 +18,7 @@ import org.openqa.selenium.support.PageFactory;
 public class BasePage {
 
     protected WebDriver driver;
-    protected TeasyElementProvider elementFinder;
-    protected long timeout = 10;
+    private TeasyElementProvider elementFinder;
 
     public final void load(final String pathString) {
         if (!pathString.isEmpty()) {
