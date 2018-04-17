@@ -29,9 +29,13 @@ public class SoftAssert extends Assertion {
         }
     }
 
-    public void add(String error) {
+    public void addWithScreenshot(String error) {
         list.add(error);
         new Screenshoter().takeScreenshot(error, TestParamsHolder.getTestName());
+    }
+
+    public void add(String error) {
+        list.add(error);
     }
 
     public void assertAll() {

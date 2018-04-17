@@ -3,26 +3,14 @@ package com.wiley;
 import com.wiley.assertions.SoftAssert;
 import com.wiley.holders.AssertionsHolder;
 import com.wiley.holders.TestParamsHolder;
-import com.wiley.provider.PageProvider;
 import org.testng.*;
-
-import static com.wiley.driver.WebDriverFactory.initDriver;
 
 /**
  * User: ntyukavkin
  * Date: 10.04.2018
  * Time: 14:57
  */
-public class BaseTest implements IConfigurable, IHookable {
-
-    protected <T extends BasePage> T get(Class<T> page) {
-        return PageProvider.get(page);
-    }
-
-    protected <T extends BasePage> T get(Class<T> page, String url) {
-        initDriver();
-        return PageProvider.get(page, url);
-    }
+public abstract class BaseTest implements IConfigurable, IHookable {
 
     @Override
     public void run(IConfigureCallBack callBack, ITestResult testResult) {
@@ -51,14 +39,5 @@ public class BaseTest implements IConfigurable, IHookable {
         AssertionsHolder.softAssert().assertAll();
     }
 
-    private void setThrowable(ITestResult testResult, String methodType) {
-        final Throwable testResultThrowable = testResult.getThrowable();
-        String message = testResultThrowable.getMessage() != null ? testResultThrowable.getMessage() : testResultThrowable.getCause().getMessage();
-
-        if (message == null) {
-            message = methodType + " failed";
-        }
-
-        AssertionsHolder.softAssert().add(message);
-    }
+    protected abstract void setThrowable(ITestResult testResult, String methodType);
 }
