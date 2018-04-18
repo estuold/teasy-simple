@@ -5,12 +5,10 @@ import com.wiley.elements.DomTeasyElement;
 import com.wiley.elements.TeasyElement;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by shekhavtsov on 29/09/2017.
  */
-@Component
 public class TestDomElementPage extends BasePage {
 
     public TestDomElementPage checkFirstDomElement() {

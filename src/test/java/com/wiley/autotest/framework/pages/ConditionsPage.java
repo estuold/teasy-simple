@@ -4,7 +4,6 @@ import com.wiley.BasePage;
 import com.wiley.elements.SearchStrategy;
 import com.wiley.elements.TeasyElementList;
 import org.openqa.selenium.By;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
 /**
  * Created by shekhavtsov on 29/09/2017.
  */
-@Component
 public class ConditionsPage extends BasePage {
 
     public ConditionsPage checkElementsReturnAllVisibleElements() {

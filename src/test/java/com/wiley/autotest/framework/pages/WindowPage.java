@@ -4,11 +4,9 @@ import com.wiley.BasePage;
 import com.wiley.elements.TeasyElement;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 
-@Component
 public class WindowPage extends BasePage {
 
     public WindowPage checkRefreshElIsDisplayed() {

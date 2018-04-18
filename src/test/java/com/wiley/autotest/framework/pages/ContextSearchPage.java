@@ -3,12 +3,10 @@ package com.wiley.autotest.framework.pages;
 import com.wiley.BasePage;
 import com.wiley.elements.TeasyElement;
 import org.openqa.selenium.By;
-import org.springframework.stereotype.Component;
 import org.testng.Assert;
 
 import java.util.List;
 
-@Component
 public class ContextSearchPage extends BasePage {
 
     public ContextSearchPage checkContextSearch() {

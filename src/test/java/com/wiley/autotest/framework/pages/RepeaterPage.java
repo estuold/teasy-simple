@@ -4,12 +4,10 @@ import com.wiley.BasePage;
 import com.wiley.actions.RepeatableAction;
 import com.wiley.elements.SearchStrategy;
 import org.openqa.selenium.By;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by shekhavtsov on 29/09/2017.
  */
-@Component
 public class RepeaterPage extends BasePage {
 
     public RepeaterPage negativeCheck() {

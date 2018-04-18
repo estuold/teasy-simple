@@ -4,12 +4,10 @@ import com.wiley.BasePage;
 import com.wiley.elements.*;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by shekhavtsov on 20/07/2017.
  */
-@Component
 public class TestElementPage extends BasePage {
 
     public TestElementPage checkFirstVisibleElement() {
@@ -109,7 +107,7 @@ public class TestElementPage extends BasePage {
         return this;
     }
 
-    public TestElementPage checkIfElementsListIsEmptyShouldThrowException(){
+    public TestElementPage checkIfElementsListIsEmptyShouldThrowException() {
         elements(By.cssSelector("incorrect_locator"), new SearchStrategy(0)).should().beDisplayed();
         return this;
     }

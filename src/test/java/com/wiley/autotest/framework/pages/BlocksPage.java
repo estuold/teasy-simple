@@ -4,9 +4,7 @@ import com.wiley.BasePage;
 import com.wiley.elements.BlockList;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
-import org.springframework.stereotype.Component;
 
-@Component
 public class BlocksPage extends BasePage {
 
     public TestBlock getTestBlock() {
