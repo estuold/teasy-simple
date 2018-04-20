@@ -3,8 +3,6 @@ package com.wiley.utils;
 import io.qameta.allure.Step;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.LoggerFactory;
-import org.slf4j.event.Level;
-import org.testng.Reporter;
 
 /**
  * Transfers message to necessary end point
@@ -14,61 +12,35 @@ import org.testng.Reporter;
  */
 public class Report {
 
-    private String message;
-    private Level level = Level.INFO;
-
-    public Report(String message) {
-        this.message = message;
+    private Report() {
     }
 
-    public Report(String message, Level level) {
-        this.message = message;
-        this.level = level;
-    }
-
-    public Report(String message, Throwable t) {
-        this(message + "\n" + ExceptionUtils.getStackTrace(t));
-    }
-
-    public Report(String message, Throwable t, Level level) {
-        this(message + "\n" + ExceptionUtils.getStackTrace(t), level);
-    }
-
-    public void testNG() {
-        Reporter.log(message + "<br/>");
-    }
-
-    public void allure() {
+    public static void everywhere(String message) {
+        testNG(message);
         allure(message);
+        jenkins(message);
+    }
+
+    public static void testNG(String message) {
+        org.testng.Reporter.log(message + "<br/>");
+    }
+
+    public static void allure(String message) {
+        allureHack(message);
     }
 
     /**
      * hack to send message to allure
      */
     @Step("{0}")
-    private void allure(String message) {
+    private static void allureHack(String message) {
     }
 
-    public void jenkins() {
-        switch (level) {
-            case INFO:
-                LoggerFactory.getLogger(this.getClass()).info(message);
-                break;
-            case WARN:
-                LoggerFactory.getLogger(this.getClass()).warn(message);
-                break;
-            case DEBUG:
-                LoggerFactory.getLogger(this.getClass()).debug(message);
-                break;
-            case ERROR:
-                LoggerFactory.getLogger(this.getClass()).error(message);
-                break;
-        }
+    public static void jenkins(String message) {
+        LoggerFactory.getLogger(Report.class).info(message);
     }
 
-    public void everywhere() {
-        testNG();
-        allure();
-        jenkins();
+    public static void jenkins(String message, Throwable throwable) {
+        LoggerFactory.getLogger(Report.class).info(message + "\n" + ExceptionUtils.getStackTrace(throwable));
     }
 }

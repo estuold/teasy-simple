@@ -88,9 +88,8 @@ public class TeasyElementWrapper {
                 }
             }
         } catch (InstantiationException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            new Report("Cannot create instance of TeasyElement." + e.getClass().getName(), e).jenkins();
+            Report.jenkins("Cannot create instance of TeasyElement." + e.getClass().getName(), e);
             throw new WrapElementException("Cannot create instance of TeasyElement. " + e.getClass().getName() + " occurred. ", e);
         }
     }
-
 }
