@@ -123,20 +123,19 @@ public abstract class BaseTeasyElement implements TeasyElement, Locatable {
             } catch (StaleElementReferenceException e) {
                 clickForStaleElement();
             } catch (UnhandledAlertException ignored) {
-                new Report("*****UnhandledAlertException***** during click! Doing nothing just trying to continue the test. Locator=" + locator.getBy()).jenkins();
+                Report.jenkins("*****UnhandledAlertException***** during click! Doing nothing just trying to continue the test. Locator=" + locator.getBy());
             } catch (UnreachableBrowserException ignored) {
                 //doing this because for FireFox for some reason browser becomes unresponsive after click
                 //but actually it is alive so it worth to try to continue test
                 //it will fail on the next method after click if some real error happened
-                new Report("*****ERROR*****UnreachableBrowserException***** during click! Doing nothing just trying to continue the test. Locator=" + locator.getBy())
-                        .jenkins();
+                Report.jenkins("*****ERROR*****UnreachableBrowserException***** during click! Doing nothing just trying to continue the test. Locator=" + locator.getBy());
             } catch (ElementNotVisibleException needToScroll) {
                 clickForNeedToScroll();
             } catch (WebDriverException ignoredOrNeedToScroll) {
                 clickForIgnoredScroll(ignoredOrNeedToScroll);
             }
         } catch (Exception e) {
-            new Report("*****UNKNOWN ERROR*****Exception***** DURING CLICK LOGIC. SHOULD BE REFACTORED!!!! Locator=" + locator.getBy(), e).jenkins();
+            Report.jenkins("*****UNKNOWN ERROR*****Exception***** DURING CLICK LOGIC. SHOULD BE REFACTORED!!!! Locator=" + locator.getBy(), e);
         }
     }
 
@@ -146,7 +145,7 @@ public abstract class BaseTeasyElement implements TeasyElement, Locatable {
     }
 
     private void clickForNeedToScroll() {
-        new Report("ElementNotVisibleException***** during click! Scrolling to element and trying again ---Locator=" + locator.getBy()).jenkins();
+        Report.jenkins("ElementNotVisibleException***** during click! Scrolling to element and trying again ---Locator=" + locator.getBy());
         increment();
         scrollIntoView(wrappedElement);
         scrollToElementLocation(wrappedElement);
@@ -154,12 +153,12 @@ public abstract class BaseTeasyElement implements TeasyElement, Locatable {
     }
 
     private void clickForIgnoredScroll(WebDriverException ignoredOrNeedToScroll) {
-        new Report("*****WebDriverException***** during click!-----Locator=" + locator.getBy()).jenkins();
+        Report.jenkins("*****WebDriverException***** during click!-----Locator=" + locator.getBy());
         increment();
         //For Android error text is different and does not have any information related to clickable issue
         String ignoredOrNeedToScrollMessage = ignoredOrNeedToScroll.getMessage();
         if (ignoredOrNeedToScrollMessage.contains("is not clickable at point")) {
-            new Report("*****Element is not clickable at point***** during click! Scrolling to element and trying again. ---Locator=" + locator.getBy()).jenkins();
+            Report.jenkins("*****Element is not clickable at point***** during click! Scrolling to element and trying again. ---Locator=" + locator.getBy());
 
             //This was added to fix cases when scrolling does not affect (in chrome when element is half hidden)
             //There is a chance that maximising will solve the case
