@@ -14,8 +14,9 @@ public abstract class BaseTest implements IConfigurable, IHookable {
 
     @Override
     public void run(IConfigureCallBack callBack, ITestResult testResult) {
-        TestParamsHolder.setTestName(testResult.getName());
         AssertionsHolder.setSoftAssert(new SoftAssert());
+
+        TestParamsHolder.setTestName(testResult.getName());
 
         callBack.runConfigurationMethod(testResult);
 
@@ -26,10 +27,12 @@ public abstract class BaseTest implements IConfigurable, IHookable {
 
     @Override
     public void run(IHookCallBack callBack, ITestResult testResult) {
-        TestParamsHolder.setTestName(testResult.getName());
-        if (AssertionsHolder.softAssert() == null) {
+        if (AssertionsHolder.softAssert() == null
+                || (TestParamsHolder.getTestName() != null && TestParamsHolder.getTestName().equals(testResult.getName()))) {
             AssertionsHolder.setSoftAssert(new SoftAssert());
         }
+
+        TestParamsHolder.setTestName(testResult.getName());
 
         callBack.runTestMethod(testResult);
 
