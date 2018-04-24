@@ -1,5 +1,6 @@
 package com.wiley.driver.factory.capabilities;
 
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
@@ -19,11 +20,17 @@ public abstract class TeasyCaps {
         this.customCaps = customCaps;
     }
 
-    public abstract DesiredCapabilities get();
+    public abstract MutableCapabilities get();
 
     void setLoggingPrefs(DesiredCapabilities caps) {
         LoggingPreferences logPrefs = new LoggingPreferences();
         logPrefs.enable(LogType.BROWSER, Level.ALL);
         caps.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+    }
+
+    void setLoggingPrefs(MutableCapabilities options) {
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.BROWSER, Level.ALL);
+        options.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
     }
 }
