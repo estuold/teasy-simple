@@ -12,34 +12,45 @@ import org.testng.*;
  */
 public abstract class BaseTest implements IConfigurable, IHookable {
 
+    private static final Object SYNC = new Object();
+
     @Override
     public void run(IConfigureCallBack callBack, ITestResult testResult) {
-        AssertionsHolder.setSoftAssert(new SoftAssert());
+        synchronized (SYNC) {
+            AssertionsHolder.setSoftAssert(new SoftAssert());
 
-        TestParamsHolder.setTestName(testResult.getName());
+            TestParamsHolder.setTestName(testResult.getName());
+        }
 
         callBack.runConfigurationMethod(testResult);
 
-        if (testResult.getThrowable() != null) {
-            setThrowable(testResult, "Configuration method");
+        synchronized (SYNC) {
+            if (testResult.getThrowable() != null) {
+                setThrowable(testResult, "Configuration method");
+            }
         }
     }
 
     @Override
     public void run(IHookCallBack callBack, ITestResult testResult) {
-        if (AssertionsHolder.softAssert() == null
-                || (TestParamsHolder.getTestName() != null && TestParamsHolder.getTestName().equals(testResult.getName()))) {
-            AssertionsHolder.setSoftAssert(new SoftAssert());
-        }
+        synchronized (SYNC) {
+            if (AssertionsHolder.softAssert() == null
+                    || (TestParamsHolder.getTestName() != null && TestParamsHolder.getTestName().equals(testResult.getName()))) {
+                AssertionsHolder.setSoftAssert(new SoftAssert());
+            }
 
-        TestParamsHolder.setTestName(testResult.getName());
+            TestParamsHolder.setTestName(testResult.getName());
+        }
 
         callBack.runTestMethod(testResult);
 
-        if (testResult.getThrowable() != null) {
-            setThrowable(testResult, "Test");
+        synchronized (SYNC) {
+            if (testResult.getThrowable() != null) {
+                setThrowable(testResult, "Test");
+
+                AssertionsHolder.softAssert().assertAll();
+            }
         }
-        AssertionsHolder.softAssert().assertAll();
     }
 
     protected abstract void setThrowable(ITestResult testResult, String methodType);

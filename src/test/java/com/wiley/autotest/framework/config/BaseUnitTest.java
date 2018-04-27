@@ -2,6 +2,7 @@ package com.wiley.autotest.framework.config;
 
 import com.wiley.BasePage;
 import com.wiley.SeleniumBaseTest;
+import com.wiley.exceptions.StopTestExecutionException;
 import com.wiley.holders.AssertionsHolder;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.ITestResult;
@@ -25,7 +26,8 @@ public class BaseUnitTest extends SeleniumBaseTest {
             message = methodType + " failed";
         }
 
-        if (!(testResult.getThrowable().getCause() instanceof NoSuchElementException)) {
+        if (!(testResult.getThrowable().getCause() instanceof StopTestExecutionException)
+                && !(testResult.getThrowable().getCause() instanceof NoSuchElementException)) {
             AssertionsHolder.softAssert().addWithScreenshot(message);
         }
     }
