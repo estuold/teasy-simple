@@ -411,7 +411,7 @@ public final class TeasyExpectedConditions {
             @Override
             public Boolean apply(final WebDriver driver) {
                 int startXLocation = element.getLocation().getX();
-                TestUtils.waitForSomeTime(100, "Wait for element loaded");
+                TestUtils.sleep(100, "Wait for element loaded");
                 return startXLocation == element.getLocation().getX();
             }
 

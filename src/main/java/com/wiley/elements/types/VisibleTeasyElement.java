@@ -1,5 +1,8 @@
-package com.wiley.elements;
+package com.wiley.elements.types;
 
+import com.wiley.elements.SearchStrategy;
+import com.wiley.elements.TeasyElementData;
+import com.wiley.elements.TeasyFluentWait;
 import com.wiley.elements.should.Should;
 import com.wiley.elements.should.VisibleShould;
 import com.wiley.elements.waitfor.ElementWaitFor;

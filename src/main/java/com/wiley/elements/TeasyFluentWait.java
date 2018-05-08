@@ -2,6 +2,7 @@ package com.wiley.elements;
 
 import org.openqa.selenium.support.ui.FluentWait;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -19,8 +20,8 @@ public class TeasyFluentWait<T> extends FluentWait<T> {
 
     public TeasyFluentWait(T input, SearchStrategy strategy) {
         super(input);
-        withTimeout(strategy.getCustomTimeout(), TimeUnit.SECONDS);
-        pollingEvery(strategy.getPoolingEvery(), strategy.getUnit());
+        withTimeout(Duration.ofSeconds(strategy.getCustomTimeout()));
+        pollingEvery(Duration.of(strategy.getPoolingEvery(), strategy.getUnit()));
         this.nullOnFailure = strategy.isNullOnFailure();
     }
 

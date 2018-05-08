@@ -1,5 +1,9 @@
 package com.wiley.elements;
 
+import com.wiley.elements.types.DomTeasyElement;
+import com.wiley.elements.types.NullTeasyElement;
+import com.wiley.elements.types.VisibleTeasyElement;
+
 /**
  * Default factory for Teasy Element. If you want to provide you own implementations
  * you will need to pass similar factory to the {@link com.wiley.config.Configuration}

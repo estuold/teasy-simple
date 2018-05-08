@@ -25,7 +25,7 @@ public abstract class WindowFinder {
     //TODO VE: not sure if this is still actual (to be commented in next releases to check)
     protected void waitForChrome() {
         if (isChrome()) {
-            TestUtils.waitForSomeTime(3000, "Wait for window is appear in chrome");
+            TestUtils.sleep(3000, "Wait for window is appear in chrome");
         }
     }
 }

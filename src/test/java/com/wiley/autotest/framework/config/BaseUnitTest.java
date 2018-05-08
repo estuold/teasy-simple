@@ -1,6 +1,6 @@
 package com.wiley.autotest.framework.config;
 
-import com.wiley.BasePage;
+import com.wiley.page.BasePage;
 import com.wiley.SeleniumBaseTest;
 import com.wiley.exceptions.StopTestExecutionException;
 import com.wiley.holders.AssertionsHolder;

@@ -1,6 +1,5 @@
-package com.wiley.provider;
+package com.wiley.page;
 
-import com.wiley.BasePage;
 import com.wiley.holders.DriverHolder;
 
 import java.util.HashMap;

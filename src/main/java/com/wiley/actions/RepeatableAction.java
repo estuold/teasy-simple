@@ -74,7 +74,7 @@ public class RepeatableAction {
                 attemptCounter = 0;
                 throw new StopTestExecutionException(getErrorMessage());
             }
-            TestUtils.waitForSomeTime(millisecondsBetweenAttempts, "Sleeping inside action repeater");
+            TestUtils.sleep(millisecondsBetweenAttempts, "Sleeping inside action repeater");
             perform();
         }
     }

@@ -2,6 +2,8 @@ package com.wiley.elements;
 
 import com.wiley.config.Configuration;
 
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -13,7 +15,7 @@ public class SearchStrategy {
     private long customTimeout;
     private static final long DEFAULT_SLEEP_TIMEOUT = 500L;
     private long poolingEvery = DEFAULT_SLEEP_TIMEOUT;
-    private TimeUnit unit = TimeUnit.MILLISECONDS;
+    private TemporalUnit unit = ChronoUnit.MILLIS;
     private FrameStrategy frameStrategy = FrameStrategy.FIRST_FOUND;
 
     //flag showing that null should be returned instead of failing
@@ -33,7 +35,7 @@ public class SearchStrategy {
         return this;
     }
 
-    public SearchStrategy pollingEvery(long time, TimeUnit unit) {
+    public SearchStrategy pollingEvery(long time, TemporalUnit unit) {
         this.poolingEvery = time;
         this.unit = unit;
         return this;
@@ -57,7 +59,7 @@ public class SearchStrategy {
         return poolingEvery;
     }
 
-    public TimeUnit getUnit() {
+    public TemporalUnit getUnit() {
         return unit;
     }
 

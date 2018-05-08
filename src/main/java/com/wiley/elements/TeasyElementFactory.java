@@ -1,5 +1,9 @@
 package com.wiley.elements;
 
+import com.wiley.elements.types.DomTeasyElement;
+import com.wiley.elements.types.NullTeasyElement;
+import com.wiley.elements.types.VisibleTeasyElement;
+
 /**
  * Abstract factory to create different types of Teasy Element
  */

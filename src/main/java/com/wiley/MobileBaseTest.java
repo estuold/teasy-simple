@@ -1,7 +1,8 @@
 package com.wiley;
 
 import com.wiley.holders.AssertionsHolder;
-import com.wiley.provider.PageProvider;
+import com.wiley.page.BasePage;
+import com.wiley.page.PageProvider;
 import org.testng.ITestResult;
 
 import static com.wiley.driver.WebDriverFactory.initDriver;

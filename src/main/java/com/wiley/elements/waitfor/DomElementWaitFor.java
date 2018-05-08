@@ -6,6 +6,7 @@ import com.wiley.elements.TeasyFluentWait;
 import com.wiley.elements.conditions.element.*;
 import org.openqa.selenium.WebDriver;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -24,8 +25,9 @@ public class DomElementWaitFor implements ElementWaitFor {
 
     public DomElementWaitFor(TeasyElement element, SearchStrategy strategy, TeasyFluentWait<WebDriver> fluentWait) {
         this(element, fluentWait);
-        this.fluentWait.withTimeout(strategy.getCustomTimeout(), TimeUnit.SECONDS);
-        this.fluentWait.pollingEvery(strategy.getPoolingEvery(), strategy.getUnit());
+
+        this.fluentWait.withTimeout(Duration.ofSeconds(strategy.getCustomTimeout()));
+        this.fluentWait.pollingEvery(Duration.of(strategy.getPoolingEvery(), strategy.getUnit()));
     }
 
     public void displayed() {

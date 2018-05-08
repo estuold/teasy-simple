@@ -1,6 +1,9 @@
 package com.wiley.autotest.framework.pages;
 
-import com.wiley.BasePage;
+import com.wiley.elements.types.DomTeasyElement;
+import com.wiley.elements.types.NullTeasyElement;
+import com.wiley.elements.types.VisibleTeasyElement;
+import com.wiley.page.BasePage;
 import com.wiley.elements.*;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;

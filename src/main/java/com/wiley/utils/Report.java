@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Allure
  * Jenkins console
  */
-public class Report {
+public final class Report {
 
     private Report() {
     }
@@ -31,6 +31,8 @@ public class Report {
 
     /**
      * hack to send message to allure
+     *
+     * @param message - is used by {@link Step} annotation
      */
     @Step("{0}")
     private static void allureHack(String message) {

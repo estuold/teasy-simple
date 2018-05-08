@@ -1,5 +1,7 @@
-package com.wiley.elements;
+package com.wiley.page;
 
+import com.wiley.elements.*;
+import com.wiley.elements.types.NullTeasyElement;
 import com.wiley.elements.waitfor.CustomWaitFor;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;

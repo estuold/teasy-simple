@@ -1,10 +1,11 @@
-package com.wiley.elements;
+package com.wiley.elements.types;
 
+import com.wiley.elements.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class ElementLocatorFactory {
+class ElementLocatorFactory {
 
     private TeasyElementData elementData;
     private WebDriver driver;
@@ -26,7 +27,7 @@ public class ElementLocatorFactory {
             return new FindElementsLocator(driver, by, index);
         } else if (searchContext != null && by != null) {
             //element in searchContext
-           return new FindElementLocator(searchContext, by);
+            return new FindElementLocator(searchContext, by);
         } else if (by != null) {
             //element
             return new FindElementLocator(driver, by);

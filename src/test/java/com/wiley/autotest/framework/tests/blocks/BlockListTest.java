@@ -3,7 +3,7 @@ package com.wiley.autotest.framework.tests.blocks;
 import com.wiley.autotest.framework.config.BaseUnitTest;
 import com.wiley.autotest.framework.pages.BlocksPage;
 import com.wiley.autotest.framework.pages.TestBlock;
-import com.wiley.elements.BlockList;
+import com.wiley.page.BlockList;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
