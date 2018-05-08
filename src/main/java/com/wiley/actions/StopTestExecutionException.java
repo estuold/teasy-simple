@@ -1,4 +1,4 @@
-package com.wiley.exceptions;
+package com.wiley.actions;
 
 /**
  * User: ntyukavkin

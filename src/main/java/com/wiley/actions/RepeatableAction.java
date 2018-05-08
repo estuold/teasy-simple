@@ -1,6 +1,5 @@
 package com.wiley.actions;
 
-import com.wiley.exceptions.StopTestExecutionException;
 import com.wiley.utils.TestUtils;
 
 import java.util.function.Supplier;
