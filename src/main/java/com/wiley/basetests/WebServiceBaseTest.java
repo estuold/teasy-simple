@@ -1,23 +1,12 @@
-package com.wiley;
+package com.wiley.basetests;
 
 import com.wiley.holders.AssertionsHolder;
-import com.wiley.page.BasePage;
-import com.wiley.page.PageProvider;
 import org.testng.ITestResult;
 
-import static com.wiley.driver.WebDriverFactory.initDriver;
-
 /**
- * User: ntyukavkin
- * Date: 10.04.2018
- * Time: 14:57
+ * Base test for Rest Assured tests
  */
-public class MobileBaseTest extends BaseTest {
-
-    protected <T extends BasePage> T openApp(Class<T> page) {
-        initDriver();
-        return PageProvider.get(page);
-    }
+public class WebServiceBaseTest extends BaseTest {
 
     protected void setThrowable(ITestResult testResult, String methodType) {
         final Throwable testResultThrowable = testResult.getThrowable();
@@ -29,6 +18,6 @@ public class MobileBaseTest extends BaseTest {
             message = methodType + " failed";
         }
 
-        AssertionsHolder.softAssert().addWithScreenshot(message);
+        AssertionsHolder.softAssert().add(message);
     }
 }

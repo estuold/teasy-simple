@@ -1,7 +1,7 @@
 package com.wiley.autotest.framework.config;
 
 import com.wiley.page.BasePage;
-import com.wiley.SeleniumBaseTest;
+import com.wiley.basetests.SeleniumBaseTest;
 import com.wiley.exceptions.StopTestExecutionException;
 import com.wiley.holders.AssertionsHolder;
 import org.openqa.selenium.NoSuchElementException;

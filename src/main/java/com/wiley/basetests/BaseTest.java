@@ -1,4 +1,4 @@
-package com.wiley;
+package com.wiley.basetests;
 
 import com.wiley.assertions.SoftAssert;
 import com.wiley.holders.AssertionsHolder;

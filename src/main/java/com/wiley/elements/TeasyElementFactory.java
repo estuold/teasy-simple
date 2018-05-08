@@ -9,7 +9,7 @@ import com.wiley.elements.types.VisibleTeasyElement;
  */
 public abstract class TeasyElementFactory {
 
-    protected TeasyElementData elementData;
+    protected final TeasyElementData elementData;
 
     public TeasyElementFactory(TeasyElementData elementData) {
         this.elementData = elementData;

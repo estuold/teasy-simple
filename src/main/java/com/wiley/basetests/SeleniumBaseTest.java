@@ -1,4 +1,4 @@
-package com.wiley;
+package com.wiley.basetests;
 
 import com.wiley.holders.AssertionsHolder;
 import com.wiley.page.BasePage;
@@ -8,9 +8,7 @@ import org.testng.ITestResult;
 import static com.wiley.driver.WebDriverFactory.initDriver;
 
 /**
- * User: ntyukavkin
- * Date: 10.04.2018
- * Time: 14:57
+ * Base test for Selenium tests
  */
 public class SeleniumBaseTest extends BaseTest {
 
