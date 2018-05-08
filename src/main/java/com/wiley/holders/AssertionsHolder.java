@@ -3,7 +3,7 @@ package com.wiley.holders;
 import com.wiley.assertions.SoftAssert;
 
 /**
- * A holder to store information about Soft Asser
+ * A holder to store information about Soft Assert
  */
 public class AssertionsHolder {
 

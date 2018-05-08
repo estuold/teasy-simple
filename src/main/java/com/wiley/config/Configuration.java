@@ -3,7 +3,7 @@ package com.wiley.config;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
- * Configuratio for a test run
+ * Configuration for a test run
  */
 public final class Configuration {
 
