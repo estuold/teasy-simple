@@ -20,9 +20,9 @@ public class BasePage {
     protected WebDriver driver;
     private TeasyElementProvider elementFinder;
 
-    public final void load(final String pathString) {
-        if (!pathString.isEmpty()) {
-            driver.get(pathString);
+    public final void open(final String url) {
+        if (!url.isEmpty()) {
+            driver.get(url);
         }
     }
 

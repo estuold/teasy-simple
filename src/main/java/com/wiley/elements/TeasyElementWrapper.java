@@ -57,8 +57,8 @@ public class TeasyElementWrapper {
     private static <T extends TeasyElement> T wrapBase(TeasyElementData data, TeasyElementType type) {
         try {
             TeasyElementFactory elementFactory;
-            if (Configuration.elementFactoryClass != null) {
-                elementFactory = (TeasyElementFactory) Class.forName(Configuration.elementFactoryClass)
+            if (Configuration.ELEMENT_FACTORY_CLASS != null) {
+                elementFactory = (TeasyElementFactory) Class.forName(Configuration.ELEMENT_FACTORY_CLASS)
                         .getDeclaredConstructor(TeasyElementData.class).newInstance(data);
             } else {
                 elementFactory = new DefaultTeasyElementFactory(data);

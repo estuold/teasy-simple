@@ -6,9 +6,8 @@ import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.WebDriver;
 
 /**
- * User: ntyukavkin
- * Date: 10.04.2018
- * Time: 14:59
+ * Holder to store all drivers
+ * //TODO VE probably only WebDriver should be kept here
  */
 public class DriverHolder {
 

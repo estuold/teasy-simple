@@ -24,7 +24,9 @@ public class SeleniumBaseTest extends BaseTest {
 
     protected void setThrowable(ITestResult testResult, String methodType) {
         final Throwable testResultThrowable = testResult.getThrowable();
-        String message = testResultThrowable.getMessage() != null ? testResultThrowable.getMessage() : testResultThrowable.getCause().getMessage();
+        String message = testResultThrowable.getMessage() != null
+                ? testResultThrowable.getMessage()
+                : testResultThrowable.getCause().getMessage();
 
         if (message == null) {
             message = methodType + " failed";

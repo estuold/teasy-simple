@@ -21,7 +21,7 @@ public class SearchStrategy {
 
     public SearchStrategy() {
         //setting default timeout value taken from pom.xml's property 'application.selenium.timeout'
-        this.customTimeout = Configuration.timeout;
+        this.customTimeout = Configuration.TIMEOUT;
     }
 
     public SearchStrategy(long customTimeoutInSeconds) {

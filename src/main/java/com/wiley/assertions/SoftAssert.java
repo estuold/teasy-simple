@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class SoftAssert extends Assertion {
 
-    private final List<String> list = new LinkedList<>();
+    private final List<String> errors = new LinkedList<>();
 
     @Override
     protected void doAssert(IAssert<?> assertCommand) {
@@ -30,32 +30,32 @@ public class SoftAssert extends Assertion {
     }
 
     public void addWithScreenshot(String error) {
-        list.add(error);
+        add(error);
         new Screenshoter().takeScreenshot(error, TestParamsHolder.getTestName());
     }
 
     public void add(String error) {
-        list.add(error);
+        errors.add(error);
     }
 
     public void assertAll() {
         if (hasErrors()) {
             StringBuilder sb = new StringBuilder("The following asserts failed:");
             boolean first = true;
-            for (String ae : list) {
+            for (String e : errors) {
                 if (first) {
                     first = false;
                 } else {
                     sb.append(",");
                 }
                 sb.append("\n\t");
-                sb.append(ae);
+                sb.append(e);
             }
             throw new AssertionError(sb.toString());
         }
     }
 
     private boolean hasErrors() {
-        return !list.isEmpty();
+        return !errors.isEmpty();
     }
 }
