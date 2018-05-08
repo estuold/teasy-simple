@@ -1,7 +1,6 @@
 package com.wiley.elements.conditions;
 
 import com.wiley.elements.TeasyElement;
-import com.wiley.elements.TeasyExpectedConditions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
