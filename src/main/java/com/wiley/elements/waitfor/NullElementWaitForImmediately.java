@@ -2,6 +2,7 @@ package com.wiley.elements.waitfor;
 
 import com.wiley.elements.TeasyElement;
 import com.wiley.elements.TeasyFluentWait;
+import com.wiley.elements.types.NullTeasyElement;
 import com.wiley.holders.DriverHolder;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +10,9 @@ import org.openqa.selenium.WebDriver;
 import java.util.function.Function;
 
 /**
- * Created by vefimov on 26/04/2017.
+ * Immediate Condition waiter for {@link NullTeasyElement}
+ * Immediately checks for a condition
+ * (does not wait for a default timeout as in {@link NullTeasyElement})
  */
 public class NullElementWaitForImmediately implements ElementWaitFor {
 
@@ -60,7 +63,8 @@ public class NullElementWaitForImmediately implements ElementWaitFor {
     }
 
     private void throwException() {
-        throw new NoSuchElementException("Unable to find element with locator '" + element.getLocator().getBy() + "'");
+        throw new NoSuchElementException("Unable to find element with locator '" + element.getLocator()
+                .getBy() + "'");
     }
 
     //We can log something here... or just keep it as empty(delete)

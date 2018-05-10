@@ -51,7 +51,7 @@ public abstract class AbstractBlock {
     }
 
     public CustomWaitFor waitFor(SearchStrategy strategy) {
-        return new CustomWaitFor();
+        return new CustomWaitFor(strategy);
     }
 
     public TeasyElement element(final By locator) {

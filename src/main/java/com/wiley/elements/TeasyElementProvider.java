@@ -13,11 +13,11 @@ public class TeasyElementProvider {
 
     private TeasyElementFinder finder;
 
-    public TeasyElementFinder customFinder(SearchStrategy strategy) {
+    private TeasyElementFinder customFinder(SearchStrategy strategy) {
         return new TeasyElementFinder(getDriver(), strategy);
     }
 
-    public TeasyElementFinder finder() {
+    private TeasyElementFinder finder() {
         if (finder == null) {
             finder = new TeasyElementFinder(getDriver(), new SearchStrategy());
         }
@@ -29,7 +29,7 @@ public class TeasyElementProvider {
     }
 
     public CustomWaitFor waitFor(SearchStrategy strategy) {
-        return new CustomWaitFor();
+        return new CustomWaitFor(strategy);
     }
 
     public TeasyElement element(final By locator) {

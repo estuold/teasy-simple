@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.function.Function;
 
 /**
- * Condition waiter for Null Element
+ * Condition waiter for {@link NullTeasyElement}
  */
 public class NullElementWaitFor implements ElementWaitFor {
 
