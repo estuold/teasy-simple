@@ -14,11 +14,11 @@ public class TeasyDriver {
     public WebDriver init() {
         DriverFactory driverFactory;
         URL gridUrl = getGridHubUrl();
-        boolean isHeadless = Configuration.HEADLESS;
-        if (Configuration.RUN_WITH_GRID) {
-            driverFactory = new RemoteDriverFactory(Configuration.BROWSER, Configuration.PLATFORM, Configuration.CUSTOM_CAPS, isHeadless, gridUrl);
+        boolean isHeadless = Configuration.headless;
+        if (Configuration.runWithGrid) {
+            driverFactory = new RemoteDriverFactory(Configuration.browser, Configuration.platform, Configuration.customCaps, isHeadless, gridUrl);
         } else {
-            driverFactory = new StandaloneDriverFactory(Configuration.BROWSER, Configuration.PLATFORM, Configuration.CUSTOM_CAPS, isHeadless, gridUrl);
+            driverFactory = new StandaloneDriverFactory(Configuration.browser, Configuration.platform, Configuration.customCaps, isHeadless, gridUrl);
         }
 
         return driverFactory.get();
@@ -27,9 +27,9 @@ public class TeasyDriver {
     private URL getGridHubUrl() {
         URL url;
         try {
-            url = new URL(Configuration.GRID_HUB_URL);
+            url = new URL(Configuration.gridHubUrl);
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Error during gridhuburl creation. For url " + Configuration.GRID_HUB_URL);
+            throw new RuntimeException("Error during gridhuburl creation. For url " + Configuration.gridHubUrl);
         }
         return url;
     }
