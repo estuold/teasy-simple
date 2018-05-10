@@ -10,9 +10,6 @@ public final class Configuration {
     private Configuration() {
     }
 
-    //null means that default element factory will be used
-    public static String ELEMENT_FACTORY_CLASS = null;
-
     public static String platform = "windows";
 
     public static String browser = "chrome";
