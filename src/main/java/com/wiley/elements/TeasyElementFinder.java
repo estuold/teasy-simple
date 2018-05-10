@@ -48,7 +48,7 @@ public class TeasyElementFinder {
      * note: Will return empty list in case no visible elements found
      */
     public List<TeasyElement> visibleElements(By locator) {
-        return getElements(locator, conditionFactory.get().visibilities(locator), VISIBLE);
+        return getElements(locator, conditionFactory.get().visibilityOfList(locator), VISIBLE);
     }
 
     public TeasyElement presentInDomElement(By locator) {
@@ -59,7 +59,7 @@ public class TeasyElementFinder {
      * note: Will return empty list in case no elements found in DOM
      */
     public List<TeasyElement> presentInDomElements(By locator) {
-        return getElements(locator, conditionFactory.get().presences(locator), DOM);
+        return getElements(locator, conditionFactory.get().presenceOfList(locator), DOM);
     }
 
     //this is not "Teasy" alert yet, so should probably become "Teasy"

@@ -2,6 +2,7 @@ package com.wiley.elements.conditions;
 
 import com.wiley.elements.SearchStrategy;
 import com.wiley.elements.TeasyElement;
+import com.wiley.elements.conditions.frame.*;
 
 /**
  * Created by vefimov on 25/05/2017.
@@ -20,7 +21,7 @@ public class FramesConditionFactory {
         this(null, frameStrategy);
     }
 
-    public ElementCondition get() {
+    public ElementFrameCondition get() {
         if (context == null) {
             switch (frameStrategy) {
                 case FIRST_FOUND:
