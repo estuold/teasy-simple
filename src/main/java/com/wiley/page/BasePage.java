@@ -17,7 +17,7 @@ import org.openqa.selenium.support.PageFactory;
 public class BasePage {
 
     protected WebDriver driver;
-    private TeasyElementProvider elementFinder;
+    private TeasyElementProvider teasyElementProvider;
 
     public final void open(final String url) {
         if (!url.isEmpty()) {
@@ -27,7 +27,7 @@ public class BasePage {
 
     public void init(WebDriver driver) {
         this.driver = driver;
-        this.elementFinder = new TeasyElementProvider();
+        this.teasyElementProvider = new TeasyElementProvider();
         initFindByAnnotations(this);
         init();
     }
@@ -57,54 +57,54 @@ public class BasePage {
     }
 
     public CustomWaitFor waitFor() {
-        return elementFinder.waitFor();
+        return teasyElementProvider.waitFor();
     }
 
     public CustomWaitFor waitFor(SearchStrategy strategy) {
-        return elementFinder.waitFor(strategy);
+        return teasyElementProvider.waitFor(strategy);
     }
 
     public TeasyElement element(final By locator) {
-        return elementFinder.element(locator);
+        return teasyElementProvider.element(locator);
     }
 
     public TeasyElement element(final By locator, SearchStrategy strategy) {
-        return elementFinder.element(locator, strategy);
+        return teasyElementProvider.element(locator, strategy);
     }
 
     public TeasyElementList elements(final By locator) {
-        return elementFinder.elements(locator);
+        return teasyElementProvider.elements(locator);
     }
 
     public TeasyElementList elements(final By locator, SearchStrategy strategy) {
-        return elementFinder.elements(locator, strategy);
+        return teasyElementProvider.elements(locator, strategy);
     }
 
     public TeasyElement domElement(By locator) {
-        return elementFinder.domElement(locator);
+        return teasyElementProvider.domElement(locator);
     }
 
     public TeasyElement domElement(By locator, SearchStrategy strategy) {
-        return elementFinder.domElement(locator, strategy);
+        return teasyElementProvider.domElement(locator, strategy);
     }
 
     public TeasyElementList domElements(By locator) {
-        return elementFinder.domElements(locator);
+        return teasyElementProvider.domElements(locator);
     }
 
     public TeasyElementList domElements(By locator, SearchStrategy strategy) {
-        return elementFinder.domElements(locator, strategy);
+        return teasyElementProvider.domElements(locator, strategy);
     }
 
     public Alert alert() {
-        return elementFinder.alert();
+        return teasyElementProvider.alert();
     }
 
     public Alert alert(SearchStrategy strategy) {
-        return elementFinder.alert(strategy);
+        return teasyElementProvider.alert(strategy);
     }
 
     public Window window() {
-        return elementFinder.window();
+        return teasyElementProvider.window();
     }
 }
