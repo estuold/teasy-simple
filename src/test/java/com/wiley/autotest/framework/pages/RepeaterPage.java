@@ -1,6 +1,6 @@
 package com.wiley.autotest.framework.pages;
 
-import com.wiley.BasePage;
+import com.wiley.page.BasePage;
 import com.wiley.actions.RepeatableAction;
 import com.wiley.elements.SearchStrategy;
 import org.openqa.selenium.By;

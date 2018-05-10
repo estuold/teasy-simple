@@ -3,14 +3,15 @@ package com.wiley.config;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
- * User: ntyukavkin
- * Date: 13.04.2018
- * Time: 11:42
+ * Configuration for a test run
  */
-public class Configuration {
+public final class Configuration {
 
     private Configuration() {
     }
+
+    //null means that default element factory will be used
+    public static String ELEMENT_FACTORY_CLASS = null;
 
     public static String platform = "windows";
 
@@ -25,6 +26,7 @@ public class Configuration {
     public static int timeout = 10;
 
     public static DesiredCapabilities customCaps = new DesiredCapabilities();
+    //null means that default element factory will be used
 
-    public static String elementFactoryClass;
+    public static String elementFactoryClass = null;
 }

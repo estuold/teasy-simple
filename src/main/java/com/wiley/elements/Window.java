@@ -5,7 +5,7 @@ import com.wiley.elements.conditions.window.WindowMatcher;
 import java.net.URL;
 
 /**
- * Represents Browser Window and all possible actions of it
+ * Represents Browser Window and all possible actions in it
  */
 public interface Window {
 

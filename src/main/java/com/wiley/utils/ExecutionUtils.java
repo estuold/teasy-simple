@@ -10,10 +10,10 @@ import com.wiley.config.Configuration;
 public class ExecutionUtils {
 
     public static boolean isFF() {
-        return Configuration.browser.equals("firefox");
+        return Configuration.BROWSER.equals("firefox");
     }
 
     public static boolean isChrome() {
-        return Configuration.browser.equals("chrome");
+        return Configuration.BROWSER.equals("chrome");
     }
 }

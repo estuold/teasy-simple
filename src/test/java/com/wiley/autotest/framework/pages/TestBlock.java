@@ -1,6 +1,6 @@
 package com.wiley.autotest.framework.pages;
 
-import com.wiley.elements.AbstractBlock;
+import com.wiley.page.AbstractBlock;
 import com.wiley.elements.TeasyElement;
 import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;

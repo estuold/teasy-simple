@@ -1,6 +1,6 @@
 package com.wiley.elements.conditions.window;
 
-import com.wiley.elements.TeasyExpectedConditions;
+import com.wiley.elements.conditions.TeasyExpectedConditions;
 import org.openqa.selenium.WebDriver;
 
 import java.util.function.Function;

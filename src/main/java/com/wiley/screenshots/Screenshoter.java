@@ -30,8 +30,7 @@ public class Screenshoter {
 
     public void takeScreenshot(final String errorMessage, final String testName) {
         try {
-            final File screenShot = ((TakesScreenshot) DriverHolder.getDriver()).getScreenshotAs(OutputType.FILE);
-            final BufferedImage image = ImageIO.read(screenShot);
+            final BufferedImage image = new TeasyScreenshot(DriverHolder.getDriver()).fullPage().getImage();
 
             printStrings(image, removeNL(testName, errorMessage));
 

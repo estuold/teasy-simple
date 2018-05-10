@@ -1,15 +1,12 @@
-package com.wiley.provider;
+package com.wiley.page;
 
-import com.wiley.BasePage;
 import com.wiley.holders.DriverHolder;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * User: ntyukavkin
- * Date: 10.04.2018
- * Time: 15:19
+ * Entry point to Page classes
  */
 public class PageProvider {
 
@@ -24,7 +21,7 @@ public class PageProvider {
 
     public static <T extends BasePage> T get(Class<T> target, String urlToOpen) {
         T page = getPage(target);
-        page.load(urlToOpen);
+        page.open(urlToOpen);
         return page;
     }
 

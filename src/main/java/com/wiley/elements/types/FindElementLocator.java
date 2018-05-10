@@ -1,5 +1,7 @@
-package com.wiley.elements;
+package com.wiley.elements.types;
 
+import com.wiley.elements.Locator;
+import com.wiley.elements.TeasyElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

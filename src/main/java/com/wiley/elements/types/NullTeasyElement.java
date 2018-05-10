@@ -1,5 +1,6 @@
-package com.wiley.elements;
+package com.wiley.elements.types;
 
+import com.wiley.elements.*;
 import com.wiley.elements.should.NullShould;
 import com.wiley.elements.should.NullShouldImmediately;
 import com.wiley.elements.should.Should;

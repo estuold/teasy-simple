@@ -2,6 +2,7 @@ package com.wiley.elements.waitfor;
 
 import com.wiley.elements.*;
 import com.wiley.elements.conditions.element.*;
+import com.wiley.elements.types.NullTeasyElement;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 

@@ -1,10 +1,9 @@
-package com.wiley;
+package com.wiley.page;
 
 import com.wiley.assertions.SoftAssert;
 import com.wiley.elements.*;
 import com.wiley.elements.waitfor.CustomWaitFor;
 import com.wiley.holders.AssertionsHolder;
-import com.wiley.provider.PageProvider;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,9 +19,9 @@ public class BasePage {
     protected WebDriver driver;
     private TeasyElementProvider elementFinder;
 
-    public final void load(final String pathString) {
-        if (!pathString.isEmpty()) {
-            driver.get(pathString);
+    public final void open(final String url) {
+        if (!url.isEmpty()) {
+            driver.get(url);
         }
     }
 

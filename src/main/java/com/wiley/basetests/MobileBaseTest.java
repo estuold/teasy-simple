@@ -1,15 +1,14 @@
-package com.wiley;
+package com.wiley.basetests;
 
 import com.wiley.holders.AssertionsHolder;
-import com.wiley.provider.PageProvider;
+import com.wiley.page.BasePage;
+import com.wiley.page.PageProvider;
 import org.testng.ITestResult;
 
 import static com.wiley.driver.WebDriverFactory.initDriver;
 
 /**
- * User: ntyukavkin
- * Date: 10.04.2018
- * Time: 14:57
+ * Base test for Appium tests
  */
 public class MobileBaseTest extends BaseTest {
 
@@ -20,7 +19,9 @@ public class MobileBaseTest extends BaseTest {
 
     protected void setThrowable(ITestResult testResult, String methodType) {
         final Throwable testResultThrowable = testResult.getThrowable();
-        String message = testResultThrowable.getMessage() != null ? testResultThrowable.getMessage() : testResultThrowable.getCause().getMessage();
+        String message = testResultThrowable.getMessage() != null
+                ? testResultThrowable.getMessage()
+                : testResultThrowable.getCause().getMessage();
 
         if (message == null) {
             message = methodType + " failed";

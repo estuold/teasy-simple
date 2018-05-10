@@ -1,4 +1,4 @@
-package com.wiley;
+package com.wiley.basetests;
 
 import com.wiley.assertions.SoftAssert;
 import com.wiley.holders.AssertionsHolder;
@@ -6,9 +6,11 @@ import com.wiley.holders.TestParamsHolder;
 import org.testng.*;
 
 /**
- * User: ntyukavkin
- * Date: 10.04.2018
- * Time: 14:57
+ * Abstract base class for a TestNG tests
+ * Should be extended by all tests in a project
+ *
+ * It processes failed assertions and calls
+ * {@link SoftAssert#assertAll()}
  */
 public abstract class BaseTest implements IConfigurable, IHookable {
 
@@ -35,7 +37,8 @@ public abstract class BaseTest implements IConfigurable, IHookable {
     public void run(IHookCallBack callBack, ITestResult testResult) {
         synchronized (SYNC) {
             if (AssertionsHolder.softAssert() == null
-                    || (TestParamsHolder.getTestName() != null && TestParamsHolder.getTestName().equals(testResult.getName()))) {
+                    || (TestParamsHolder.getTestName() != null
+                    && TestParamsHolder.getTestName().equals(testResult.getName()))) {
                 AssertionsHolder.setSoftAssert(new SoftAssert());
             }
 

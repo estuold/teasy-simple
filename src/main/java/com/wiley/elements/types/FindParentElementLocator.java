@@ -1,5 +1,6 @@
-package com.wiley.elements;
+package com.wiley.elements.types;
 
+import com.wiley.elements.Locator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.SearchContext;

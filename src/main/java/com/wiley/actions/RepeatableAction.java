@@ -1,6 +1,5 @@
 package com.wiley.actions;
 
-import com.wiley.exceptions.StopTestExecutionException;
 import com.wiley.utils.TestUtils;
 
 import java.util.function.Supplier;
@@ -74,7 +73,7 @@ public class RepeatableAction {
                 attemptCounter = 0;
                 throw new StopTestExecutionException(getErrorMessage());
             }
-            TestUtils.waitForSomeTime(millisecondsBetweenAttempts, "Sleeping inside action repeater");
+            TestUtils.sleep(millisecondsBetweenAttempts, "Sleeping inside action repeater");
             perform();
         }
     }

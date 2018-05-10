@@ -1,6 +1,7 @@
-package com.wiley.elements;
+package com.wiley.elements.types;
 
 import com.wiley.driver.frames.FramesTransparentWebDriver;
+import com.wiley.elements.*;
 import com.wiley.holders.DriverHolder;
 import com.wiley.utils.Report;
 import com.wiley.utils.TestUtils;
@@ -166,7 +167,7 @@ public abstract class BaseTeasyElement implements TeasyElement, Locatable {
                 maximizeWindow();
                 if (isChrome()) {
                     //Some pages (e.g. in Administration Workspace) are reloaded after maximize window in Chrome
-                    TestUtils.waitForSomeTime(3000, "Wait for window maximized");
+                    TestUtils.sleep(3000, "Wait for window maximized");
                     againLocate();
                 }
             }

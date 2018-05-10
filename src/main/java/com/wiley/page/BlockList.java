@@ -1,4 +1,8 @@
-package com.wiley.elements;
+package com.wiley.page;
+
+import com.wiley.elements.TeasyElement;
+import com.wiley.elements.TeasyElementList;
+import com.wiley.page.AbstractBlock;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
