@@ -34,7 +34,7 @@ public class PageProvider {
             try {
                 value = Class.forName(className).newInstance();
             } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-                throw new RuntimeException("Unable to find class [" + page + "] in classpath");
+                throw new RuntimeException("Unable to find class [" + page.getName() + "] in classpath");
             }
             ((T) value).init(DriverHolder.getDriver());
             map.get().put(className, value);
