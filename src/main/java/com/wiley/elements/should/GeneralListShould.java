@@ -1,6 +1,6 @@
 package com.wiley.elements.should;
 
-import com.wiley.elements.TeasyElementList;
+import com.wiley.elements.types.TeasyElementList;
 import com.wiley.elements.TeasyFluentWait;
 import com.wiley.elements.conditions.elements.*;
 import org.openqa.selenium.WebDriver;

@@ -12,10 +12,6 @@ public class CustomWaitFor {
 
     private final SearchStrategy strategy;
 
-    public CustomWaitFor() {
-        this.strategy = new SearchStrategy();
-    }
-
     public CustomWaitFor(SearchStrategy strategy) {
         this.strategy = strategy;
     }

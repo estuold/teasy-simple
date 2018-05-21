@@ -7,7 +7,6 @@ import com.wiley.elements.conditions.element.*;
 import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
@@ -15,58 +14,58 @@ import java.util.function.Function;
  */
 public class VisibleElementWaitFor implements ElementWaitFor {
 
-    private final TeasyFluentWait<WebDriver> fluentWait;
+    private final TeasyFluentWait<WebDriver> wait;
     private final TeasyElement element;
 
-    public VisibleElementWaitFor(TeasyElement element, TeasyFluentWait<WebDriver> fluentWait) {
+    public VisibleElementWaitFor(TeasyElement element, TeasyFluentWait<WebDriver> wait) {
         this.element = element;
-        this.fluentWait = fluentWait;
+        this.wait = wait;
     }
 
-    public VisibleElementWaitFor(TeasyElement element, SearchStrategy strategy, TeasyFluentWait<WebDriver> fluentWait) {
-        this(element, fluentWait);
-        this.fluentWait.withTimeout(Duration.ofSeconds(strategy.getCustomTimeout()));
-        this.fluentWait.pollingEvery(Duration.of(strategy.getPoolingEvery(), strategy.getUnit()));
+    public VisibleElementWaitFor(TeasyElement element, SearchStrategy strategy, TeasyFluentWait<WebDriver> wait) {
+        this(element, wait);
+        this.wait.withTimeout(Duration.ofSeconds(strategy.getCustomTimeout()));
+        this.wait.pollingEvery(Duration.of(strategy.getPoolingEvery(), strategy.getUnit()));
     }
 
     public void displayed() {
-        fluentWait.waitFor(new ElementDisplayed(element));
+        wait.waitFor(new ElementDisplayed(element));
     }
 
     public void absent() {
-        fluentWait.waitFor(new ElementAbsent(element));
+        wait.waitFor(new ElementAbsent(element));
     }
 
     public void text(String text) {
-        fluentWait.waitFor(new ElementHasText(element, text));
+        wait.waitFor(new ElementHasText(element, text));
     }
 
     public void attribute(String attributeName, String value) {
-        fluentWait.waitFor(new ElementAttributeValue(element, attributeName, value));
+        wait.waitFor(new ElementAttributeValue(element, attributeName, value));
     }
 
     public void attribute(String attributeName) {
-        fluentWait.waitFor(new ElementHasAttribute(element, attributeName));
+        wait.waitFor(new ElementHasAttribute(element, attributeName));
     }
 
     public void notContainsAttributeValue(String attributeName, String value) {
-        fluentWait.waitFor(new ElementAttributeNotContain(element, attributeName, value));
+        wait.waitFor(new ElementAttributeNotContain(element, attributeName, value));
     }
 
     public void containsAttributeValue(String attributeName, String value) {
-        fluentWait.waitFor(new ElementAttributeContain(element, attributeName, value));
+        wait.waitFor(new ElementAttributeContain(element, attributeName, value));
     }
 
     public void stale() {
-        fluentWait.waitFor(new ElementStale(element));
+        wait.waitFor(new ElementStale(element));
     }
 
     public void clickable() {
-        fluentWait.waitFor(new ElementClickable(element));
+        wait.waitFor(new ElementClickable(element));
     }
 
     public void condition(Function<? super WebDriver, ?> condition) {
-        fluentWait.waitFor(condition);
+        wait.waitFor(condition);
     }
 
 }

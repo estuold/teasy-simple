@@ -1,7 +1,9 @@
 package com.wiley.page;
 
 import com.wiley.elements.*;
+import com.wiley.elements.find.*;
 import com.wiley.elements.types.NullTeasyElement;
+import com.wiley.elements.types.TeasyElementList;
 import com.wiley.elements.waitfor.CustomWaitFor;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -16,7 +18,6 @@ import static com.wiley.holders.DriverHolder.getDriver;
 public abstract class AbstractBlock {
 
     private final TeasyElement mainElement;
-    private TeasyElementFinder finder;
 
     public AbstractBlock(TeasyElement element) {
         //in case not-found-element is passed it does not make sense to create new block
@@ -24,17 +25,6 @@ public abstract class AbstractBlock {
         if (element instanceof NullTeasyElement) {
             throwException();
         }
-
-        this.finder = new TeasyElementFinder(getDriver(), new SearchStrategy(), mainElement);
-    }
-
-    /**
-     * Overriding default behavior to make it search only within context of a block
-     * <p>
-     * do not call this methods directly. it's only needed for inner logic
-     */
-    private final TeasyElementFinder customFinder(SearchStrategy strategy) {
-        return new TeasyElementFinder(getDriver(), strategy, mainElement);
     }
 
     /**
@@ -47,7 +37,7 @@ public abstract class AbstractBlock {
     }
 
     public CustomWaitFor waitFor() {
-        return new CustomWaitFor();
+        return waitFor(new SearchStrategy());
     }
 
     public CustomWaitFor waitFor(SearchStrategy strategy) {
@@ -55,43 +45,43 @@ public abstract class AbstractBlock {
     }
 
     public TeasyElement element(final By locator) {
-        return finder.visibleElement(locator);
+        return element(locator, new SearchStrategy());
     }
 
     public TeasyElement element(final By locator, SearchStrategy strategy) {
-        return customFinder(strategy).visibleElement(locator);
+        return new VisibleElementLookUp(getDriver(), strategy, mainElement).find(locator);
     }
 
     public TeasyElementList elements(final By locator) {
-        return new TeasyElementList(finder.visibleElements(locator), locator);
+        return elements(locator, new SearchStrategy());
     }
 
     public TeasyElementList elements(final By locator, SearchStrategy strategy) {
-        return new TeasyElementList(customFinder(strategy).visibleElements(locator), locator);
+        return new VisibleElementsLookUp(getDriver(), strategy, mainElement).find(locator);
     }
 
     public TeasyElement domElement(By locator) {
-        return finder.presentInDomElement(locator);
+        return domElement(locator, new SearchStrategy());
     }
 
     public TeasyElement domElement(By locator, SearchStrategy strategy) {
-        return customFinder(strategy).presentInDomElement(locator);
+        return new DomElementLookUp(getDriver(), strategy, mainElement).find(locator);
     }
 
     public TeasyElementList domElements(By locator) {
-        return new TeasyElementList(finder.presentInDomElements(locator), locator);
+        return domElements(locator, new SearchStrategy());
     }
 
     public TeasyElementList domElements(By locator, SearchStrategy strategy) {
-        return new TeasyElementList(customFinder(strategy).presentInDomElements(locator), locator);
+        return new DomElementsLookUp(getDriver(), strategy, mainElement).find(locator);
     }
 
     public Alert alert() {
-        return finder.alert();
+        return alert(new SearchStrategy());
     }
 
     public Alert alert(SearchStrategy strategy) {
-        return customFinder(strategy).alert();
+        return new AlertLookUp(getDriver(), strategy).find();
     }
 
     public Window window() {
@@ -99,7 +89,9 @@ public abstract class AbstractBlock {
     }
 
     private void throwException() {
-        throw new NoSuchElementException("Failed to create Block. Unable to find main element of a block with locator '" + mainElement.getLocator().getBy() + "'");
+        throw new NoSuchElementException("Failed to create Block. Unable to find main element of a block with locator '" + mainElement
+                .getLocatable()
+                .getBy() + "'");
     }
 }
 

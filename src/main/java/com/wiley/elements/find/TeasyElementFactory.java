@@ -1,5 +1,6 @@
-package com.wiley.elements;
+package com.wiley.elements.find;
 
+import com.wiley.elements.TeasyElementData;
 import com.wiley.elements.types.DomTeasyElement;
 import com.wiley.elements.types.NullTeasyElement;
 import com.wiley.elements.types.VisibleTeasyElement;

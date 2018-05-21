@@ -1,6 +1,8 @@
 package com.wiley.elements;
 
 import com.wiley.elements.should.Should;
+import com.wiley.elements.types.Locatable;
+import com.wiley.elements.types.TeasyElementList;
 import com.wiley.elements.waitfor.ElementWaitFor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -15,7 +17,7 @@ public interface TeasyElement extends WebElement {
     /**
      * Do not use this method. it does not fit TeasyElement concept and is only here because
      * it is originally a method of WebElement.
-     * use elements() or domElements(), depending on your needs
+     * use {@link #elements(By) or {@link #domElements(By)}
      */
     @Override
     @Deprecated
@@ -24,7 +26,7 @@ public interface TeasyElement extends WebElement {
     /**
      * Do not use this method. it does not fit TeasyElement concept and is only here because
      * it is originally a method of WebElement
-     * use element() or domElement() depending on your needs
+     * use {@link #element(By) or {@link #domElements(By))}
      */
     @Override
     @Deprecated
@@ -45,17 +47,15 @@ public interface TeasyElement extends WebElement {
     boolean isStale();
 
     /**
-     * Gets {@link Locator} interface
+     * Gets {@link Locatable} interface
      * Used for interactions with location of an element
      *
-     * @return instance of {@link Locator}
+     * @return instance of {@link Locatable}
      */
-    Locator getLocator();
+    Locatable getLocatable();
 
     /**
-     * Calls assertion engine with default settings
-     *
-     * @return instance of {@link Should}
+     * {@link #should(SearchStrategy)} with default {@link SearchStrategy}
      */
     Should should();
 
@@ -68,9 +68,7 @@ public interface TeasyElement extends WebElement {
     Should should(SearchStrategy strategy);
 
     /**
-     * Calls waiting engine with default settings
-     *
-     * @return instance of {@link ElementWaitFor}
+     * {@link #waitFor(SearchStrategy)} with default {@link SearchStrategy}
      */
     ElementWaitFor waitFor();
 
@@ -107,11 +105,7 @@ public interface TeasyElement extends WebElement {
     TeasyElement getParent(int level);
 
     /**
-     * Finds first visible element using locator {@link By}
-     * and default search strategy
-     *
-     * @param by - locator
-     * @return - first found visible element
+     * {@link #element(By, SearchStrategy)} with default {@link SearchStrategy}
      */
     TeasyElement element(By by);
 
@@ -126,10 +120,7 @@ public interface TeasyElement extends WebElement {
     TeasyElement element(By by, SearchStrategy strategy);
 
     /**
-     * Finds first found visible elements using locator {@link By}
-     *
-     * @param by - locator
-     * @return - {@link TeasyElementList}
+     * {@link #elements(By, SearchStrategy)} with default {@link SearchStrategy}
      */
     TeasyElementList elements(By by);
 
@@ -144,13 +135,7 @@ public interface TeasyElement extends WebElement {
     TeasyElementList elements(By by, SearchStrategy strategy);
 
     /**
-     * Finds first dom element using locator {@link By}
-     * note:
-     * dom element is just an element present in dom
-     * which is not necessarily visible
-     *
-     * @param by - locator
-     * @return - {@link TeasyElement}
+     * {@link #domElement(By, SearchStrategy)} with default {@link SearchStrategy}
      */
     TeasyElement domElement(By by);
 
@@ -168,13 +153,7 @@ public interface TeasyElement extends WebElement {
     TeasyElement domElement(By by, SearchStrategy strategy);
 
     /**
-     * Finds first found dom elements using locator {@link By}
-     * note:
-     * dom element is just an element present in dom
-     * which is not necessarily visible
-     *
-     * @param by - locator
-     * @return {@link TeasyElementList}
+     * {@link #domElements(By, SearchStrategy)} with default {@link SearchStrategy}
      */
     TeasyElementList domElements(By by);
 

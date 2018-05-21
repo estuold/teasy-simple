@@ -19,7 +19,7 @@ public class NullShouldImmediately implements Should {
 
     //null element can't be displayed
     public void beDisplayed() {
-        throw new AssertionError("Element is absent in DOM. Locator is '" + element.getLocator().getBy() + "'");
+        throw new AssertionError("Element is absent in DOM. Locatable is '" + element.getLocatable().getBy() + "'");
     }
 
     //null element is absent by default
@@ -52,7 +52,7 @@ public class NullShouldImmediately implements Should {
     }
 
     private void throwException() {
-        throw new NoSuchElementException("Unable to find element with locator '" + element.getLocator().getBy() + "'");
+        throw new NoSuchElementException("Unable to find element with locator '" + element.getLocatable().getBy() + "'");
     }
 
     //We can log something here... or just keep it as empty(delete)

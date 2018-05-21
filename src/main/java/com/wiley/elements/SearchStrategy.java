@@ -4,7 +4,6 @@ import com.wiley.config.Configuration;
 
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by vefimov on 26/04/2017.
@@ -23,7 +22,7 @@ public class SearchStrategy {
 
     public SearchStrategy() {
         //setting default timeout value taken from pom.xml's property 'application.selenium.timeout'
-        this.customTimeout = Configuration.timeout;
+        this(Configuration.timeout);
     }
 
     public SearchStrategy(long customTimeoutInSeconds) {

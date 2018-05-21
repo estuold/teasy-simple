@@ -1,5 +1,6 @@
 package com.wiley.elements.waitfor;
 
+import com.wiley.elements.SearchStrategy;
 import com.wiley.elements.TeasyElement;
 import com.wiley.elements.TeasyFluentWait;
 import com.wiley.elements.types.NullTeasyElement;
@@ -59,11 +60,11 @@ public class NullElementWaitForImmediately implements ElementWaitFor {
     }
 
     public void condition(Function<? super WebDriver, ?> condition) {
-        new TeasyFluentWait<>(DriverHolder.getDriver()).waitFor(condition);
+        new TeasyFluentWait<>(DriverHolder.getDriver(), new SearchStrategy()).waitFor(condition);
     }
 
     private void throwException() {
-        throw new NoSuchElementException("Unable to find element with locator '" + element.getLocator()
+        throw new NoSuchElementException("Unable to find element with locator '" + element.getLocatable()
                 .getBy() + "'");
     }
 

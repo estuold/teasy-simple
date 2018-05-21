@@ -19,7 +19,7 @@ public class TeasyWindow implements Window {
 
     public TeasyWindow(WebDriver driver) {
         this.driver = driver;
-        fluentWait = new TeasyFluentWait<>(driver);
+        fluentWait = new TeasyFluentWait<>(driver, new SearchStrategy());
     }
 
     @Override
@@ -75,8 +75,10 @@ public class TeasyWindow implements Window {
         try {
             fluentWait.waitFor(new PageLoaded());
         } catch (TimeoutException expected) {
-            String readyState = ((JavascriptExecutor) driver).executeScript("return document.readyState").toString();
-            Report.jenkins("*****ERROR***** TimeoutException occurred while waiting for page to load! return document.readyState value is '" + readyState + "' But expected to be 'complete'");
+            String readyState = ((JavascriptExecutor) driver).executeScript("return document.readyState")
+                    .toString();
+            Report.jenkins("*****ERROR***** TimeoutException occurred while waiting for page to load! " +
+                    "document.readyState value is '" + readyState + "' But expected to be 'complete'");
         } catch (WebDriverException e) {
             Report.jenkins("*****ERROR***** WebDriverException occurred while waiting for page to load!");
         }
@@ -102,6 +104,7 @@ public class TeasyWindow implements Window {
         driver.manage().window().maximize();
     }
 
+    @Override
     public void scrollTo(TeasyElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }

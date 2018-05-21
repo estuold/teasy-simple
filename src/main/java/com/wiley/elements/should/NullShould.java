@@ -1,12 +1,18 @@
 package com.wiley.elements.should;
 
-import com.wiley.elements.*;
+import com.wiley.elements.SearchStrategy;
+import com.wiley.elements.TeasyElement;
+import com.wiley.elements.TeasyElementData;
+import com.wiley.elements.TeasyFluentWait;
 import com.wiley.elements.conditions.element.*;
+import com.wiley.elements.find.DomElementLookUp;
 import com.wiley.elements.types.NullTeasyElement;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 import java.util.function.Function;
+
+import static com.wiley.holders.DriverHolder.getDriver;
 
 /**
  * Assertions for Null Element
@@ -15,12 +21,13 @@ public class NullShould implements Should {
 
     private final TeasyFluentWait<WebDriver> fluentWait;
     private final TeasyElementData elementData;
-    private final TeasyElementFinder finder;
+    private final SearchStrategy strategy;
 
-    public NullShould(TeasyElementData elementData, TeasyFluentWait<WebDriver> fluentWait, TeasyElementFinder finder) {
+    public NullShould(TeasyElementData elementData, TeasyFluentWait<WebDriver> fluentWait,
+                      SearchStrategy strategy) {
         this.elementData = elementData;
         this.fluentWait = fluentWait;
-        this.finder = finder;
+        this.strategy = strategy;
     }
 
     public void beDisplayed() {
@@ -60,7 +67,8 @@ public class NullShould implements Should {
     }
 
     private TeasyElement getElement() {
-        TeasyElement lastAttemptToGetElement = finder.presentInDomElement(elementData.getBy());
+        TeasyElement lastAttemptToGetElement = new DomElementLookUp(getDriver(), strategy,
+                elementData.getSearchContext()).find(elementData.getBy());
         if (lastAttemptToGetElement instanceof NullTeasyElement) {
             //if element is not found again - throw exception
             throwException();
@@ -73,5 +81,4 @@ public class NullShould implements Should {
     //We can log something here... or just keep it as empty(delete)
     private void doNothing() {
     }
-
 }
