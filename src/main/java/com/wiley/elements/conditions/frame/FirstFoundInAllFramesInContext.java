@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * same as {@link FirstFoundInAllFramesInContext} but searches within another element's context
+ * same as {@link FirstFoundInAllFrames} but searches within another element's context
  */
 public class FirstFoundInAllFramesInContext implements ElementFrameCondition {
 
