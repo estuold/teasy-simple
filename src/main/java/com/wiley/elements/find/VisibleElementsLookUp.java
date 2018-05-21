@@ -10,7 +10,9 @@ import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Finding visible elements
+ */
 public class VisibleElementsLookUp implements LookUpWithLocator<TeasyElementList> {
     private final TeasyElement context;
     private final TeasyFluentWait<WebDriver> fluentWait;

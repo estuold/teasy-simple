@@ -6,6 +6,9 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+/**
+ * Finding alert
+ */
 public class AlertLookUp implements LookUp<Alert> {
 
     private final TeasyFluentWait<WebDriver> fluentWait;

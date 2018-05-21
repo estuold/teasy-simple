@@ -9,7 +9,9 @@ import org.openqa.selenium.WebElement;
 
 import static com.wiley.elements.types.TeasyElementType.NULL;
 import static com.wiley.elements.types.TeasyElementType.VISIBLE;
-
+/**
+ * Finding a visible element
+ */
 public class VisibleElementLookUp implements LookUpWithLocator<TeasyElement> {
 
     private final TeasyElement context;

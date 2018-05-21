@@ -10,6 +10,9 @@ import org.openqa.selenium.WebElement;
 import static com.wiley.elements.types.TeasyElementType.*;
 import static com.wiley.elements.types.TeasyElementType.NULL;
 
+/**
+ * Finding an element in DOM
+ */
 public class DomElementLookUp implements LookUpWithLocator<TeasyElement> {
 
     private final TeasyElement context;
