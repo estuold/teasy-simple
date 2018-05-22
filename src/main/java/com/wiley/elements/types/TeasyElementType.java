@@ -1,4 +1,4 @@
-package com.wiley.elements;
+package com.wiley.elements.types;
 
 /**
  * Representation of different Teasy Elements

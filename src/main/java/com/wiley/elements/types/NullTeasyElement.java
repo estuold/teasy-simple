@@ -4,12 +4,12 @@ import com.wiley.elements.*;
 import com.wiley.elements.should.NullShould;
 import com.wiley.elements.should.NullShouldImmediately;
 import com.wiley.elements.should.Should;
+import com.wiley.elements.types.locate.LocatableFactory;
 import com.wiley.elements.waitfor.ElementWaitFor;
 import com.wiley.elements.waitfor.NullElementWaitFor;
 import com.wiley.elements.waitfor.NullElementWaitForImmediately;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.internal.Coordinates;
-import org.openqa.selenium.internal.Locatable;
 
 import java.util.List;
 
@@ -18,14 +18,14 @@ import static com.wiley.holders.DriverHolder.getDriver;
 /**
  * Represents element that is absent (not found)
  */
-public class NullTeasyElement implements TeasyElement, Locatable {
+public class NullTeasyElement implements TeasyElement, org.openqa.selenium.interactions.internal.Locatable {
 
     private TeasyElementData elementData;
-    private Locator locator;
+    private Locatable locatable;
 
     public NullTeasyElement(TeasyElementData elementData) {
         this.elementData = elementData;
-        this.locator = new ElementLocatorFactory(elementData, getDriver()).getLocator();
+        this.locatable = new LocatableFactory(elementData, getDriver()).get();
     }
 
     @Override
@@ -35,13 +35,7 @@ public class NullTeasyElement implements TeasyElement, Locatable {
 
     @Override
     public Should should(SearchStrategy strategy) {
-        TeasyElementFinder finder;
-        if (elementData.getSearchContext() == null) {
-            finder = new TeasyElementFinder(getDriver(), strategy);
-        } else {
-            finder = new TeasyElementFinder(getDriver(), strategy, elementData.getSearchContext());
-        }
-        return new NullShould(elementData, new TeasyFluentWait<>(getDriver(), strategy), finder);
+        return new NullShould(elementData, new TeasyFluentWait<>(getDriver(), strategy), strategy);
     }
 
     @Override
@@ -51,13 +45,7 @@ public class NullTeasyElement implements TeasyElement, Locatable {
 
     @Override
     public ElementWaitFor waitFor(SearchStrategy strategy) {
-        TeasyElementFinder finder;
-        if (elementData.getSearchContext() == null) {
-            finder = new TeasyElementFinder(getDriver(), strategy);
-        } else {
-            finder = new TeasyElementFinder(getDriver(), strategy, elementData.getSearchContext());
-        }
-        return new NullElementWaitFor(elementData, new TeasyFluentWait<>(getDriver(), strategy), finder);
+        return new NullElementWaitFor(elementData, new TeasyFluentWait<>(getDriver(), strategy), strategy);
     }
 
     /*
@@ -156,8 +144,8 @@ public class NullTeasyElement implements TeasyElement, Locatable {
     }
 
     @Override
-    public Locator getLocator() {
-        return locator;
+    public Locatable getLocatable() {
+        return locatable;
     }
 
     @Override
@@ -221,6 +209,6 @@ public class NullTeasyElement implements TeasyElement, Locatable {
     }
 
     private NoSuchElementException noSuchElementException() {
-        return new NoSuchElementException("Unable to find element with locator '" + elementData.getBy() + "'");
+        return new NoSuchElementException("Unable to find element with locatable '" + elementData.getBy() + "'");
     }
 }

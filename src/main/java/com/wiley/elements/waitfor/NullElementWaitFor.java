@@ -1,30 +1,37 @@
 package com.wiley.elements.waitfor;
 
-import com.wiley.elements.*;
+import com.wiley.elements.SearchStrategy;
+import com.wiley.elements.TeasyElement;
+import com.wiley.elements.TeasyElementData;
+import com.wiley.elements.TeasyFluentWait;
 import com.wiley.elements.conditions.element.*;
+import com.wiley.elements.find.DomElementLookUp;
 import com.wiley.elements.types.NullTeasyElement;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 import java.util.function.Function;
 
+import static com.wiley.holders.DriverHolder.getDriver;
+
 /**
- * Condition waiter for Null Element
+ * Condition waiter for {@link NullTeasyElement}
  */
 public class NullElementWaitFor implements ElementWaitFor {
 
-    private final TeasyFluentWait<WebDriver> fluentWait;
+    private final TeasyFluentWait<WebDriver> wait;
     private final TeasyElementData elementData;
-    private final TeasyElementFinder finder;
+    private final SearchStrategy strategy;
 
-    public NullElementWaitFor(TeasyElementData elementData, TeasyFluentWait<WebDriver> fluentWait, TeasyElementFinder finder) {
+    public NullElementWaitFor(TeasyElementData elementData, TeasyFluentWait<WebDriver> wait,
+                              SearchStrategy strategy) {
         this.elementData = elementData;
-        this.fluentWait = fluentWait;
-        this.finder = finder;
+        this.wait = wait;
+        this.strategy = strategy;
     }
 
     public void displayed() {
-        fluentWait.waitFor(new ElementDisplayed(getElement()));
+        wait.waitFor(new ElementDisplayed(getElement()));
     }
 
     public void absent() {
@@ -32,15 +39,15 @@ public class NullElementWaitFor implements ElementWaitFor {
     }
 
     public void text(String text) {
-        fluentWait.waitFor(new ElementHasText(getElement(), text));
+        wait.waitFor(new ElementHasText(getElement(), text));
     }
 
     public void attribute(String attributeName, String value) {
-        fluentWait.waitFor(new ElementAttributeValue(getElement(), attributeName, value));
+        wait.waitFor(new ElementAttributeValue(getElement(), attributeName, value));
     }
 
     public void attribute(String attributeName) {
-        fluentWait.waitFor(new ElementHasAttribute(getElement(), attributeName));
+        wait.waitFor(new ElementHasAttribute(getElement(), attributeName));
     }
 
     public void notContainsAttributeValue(String attributeName, String value) {
@@ -48,19 +55,19 @@ public class NullElementWaitFor implements ElementWaitFor {
     }
 
     public void containsAttributeValue(String attributeName, String value) {
-        fluentWait.waitFor(new ElementAttributeContain(getElement(), attributeName, value));
+        wait.waitFor(new ElementAttributeContain(getElement(), attributeName, value));
     }
 
     public void stale() {
-        fluentWait.waitFor(new ElementStale(getElement()));
+        wait.waitFor(new ElementStale(getElement()));
     }
 
     public void clickable() {
-        fluentWait.waitFor(new ElementClickable(getElement()));
+        wait.waitFor(new ElementClickable(getElement()));
     }
 
     public void condition(Function<? super WebDriver, ?> condition) {
-        fluentWait.waitFor(condition);
+        wait.waitFor(condition);
     }
 
     private void throwException() {
@@ -68,7 +75,8 @@ public class NullElementWaitFor implements ElementWaitFor {
     }
 
     private TeasyElement getElement() {
-        TeasyElement lastAttemptToGetElement = finder.presentInDomElement(elementData.getBy());
+        TeasyElement lastAttemptToGetElement = new DomElementLookUp(getDriver(), strategy,
+                elementData.getSearchContext()).find(elementData.getBy());
         if (lastAttemptToGetElement instanceof NullTeasyElement) {
             //if element is not found again - throw exception
             throwException();

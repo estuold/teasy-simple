@@ -2,12 +2,16 @@ package com.wiley.page;
 
 import com.wiley.assertions.SoftAssert;
 import com.wiley.elements.*;
+import com.wiley.elements.find.*;
+import com.wiley.elements.types.TeasyElementList;
 import com.wiley.elements.waitfor.CustomWaitFor;
 import com.wiley.holders.AssertionsHolder;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+
+import static com.wiley.holders.DriverHolder.getDriver;
 
 /**
  * User: ntyukavkin
@@ -17,7 +21,6 @@ import org.openqa.selenium.support.PageFactory;
 public class BasePage {
 
     protected WebDriver driver;
-    private TeasyElementProvider teasyElementProvider;
 
     public final void open(final String url) {
         if (!url.isEmpty()) {
@@ -27,7 +30,6 @@ public class BasePage {
 
     public void init(WebDriver driver) {
         this.driver = driver;
-        this.teasyElementProvider = new TeasyElementProvider();
         initFindByAnnotations(this);
         init();
     }
@@ -57,54 +59,54 @@ public class BasePage {
     }
 
     public CustomWaitFor waitFor() {
-        return teasyElementProvider.waitFor();
+        return waitFor(new SearchStrategy());
     }
 
     public CustomWaitFor waitFor(SearchStrategy strategy) {
-        return teasyElementProvider.waitFor(strategy);
+        return new CustomWaitFor(strategy);
     }
 
     public TeasyElement element(final By locator) {
-        return teasyElementProvider.element(locator);
+        return element(locator, new SearchStrategy());
     }
 
     public TeasyElement element(final By locator, SearchStrategy strategy) {
-        return teasyElementProvider.element(locator, strategy);
+        return new VisibleElementLookUp(getDriver(), strategy).find(locator);
     }
 
     public TeasyElementList elements(final By locator) {
-        return teasyElementProvider.elements(locator);
+        return elements(locator, new SearchStrategy());
     }
 
     public TeasyElementList elements(final By locator, SearchStrategy strategy) {
-        return teasyElementProvider.elements(locator, strategy);
+        return new VisibleElementsLookUp(getDriver(), strategy).find(locator);
     }
 
     public TeasyElement domElement(By locator) {
-        return teasyElementProvider.domElement(locator);
+        return domElement(locator, new SearchStrategy());
     }
 
     public TeasyElement domElement(By locator, SearchStrategy strategy) {
-        return teasyElementProvider.domElement(locator, strategy);
+        return new DomElementLookUp(getDriver(), strategy).find(locator);
     }
 
     public TeasyElementList domElements(By locator) {
-        return teasyElementProvider.domElements(locator);
+        return domElements(locator, new SearchStrategy());
     }
 
     public TeasyElementList domElements(By locator, SearchStrategy strategy) {
-        return teasyElementProvider.domElements(locator, strategy);
+        return new DomElementsLookUp(getDriver(), strategy).find(locator);
     }
 
     public Alert alert() {
-        return teasyElementProvider.alert();
+        return alert(new SearchStrategy());
     }
 
     public Alert alert(SearchStrategy strategy) {
-        return teasyElementProvider.alert(strategy);
+        return new AlertLookUp(driver, strategy).find();
     }
 
     public Window window() {
-        return teasyElementProvider.window();
+        return new TeasyWindow(driver);
     }
 }

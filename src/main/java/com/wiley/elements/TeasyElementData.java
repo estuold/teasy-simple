@@ -9,31 +9,30 @@ import org.openqa.selenium.WebElement;
 public class TeasyElementData {
 
     //element that we found and will be wrapping with TeasyElement;
-    private WebElement element;
+    private final WebElement element;
     //when we search for an element inside another element;
-    private TeasyElement searchContext;
+    private final TeasyElement context;
     //locator for an element that we are searching for;
-    private By by;
+    private final By by;
     //index of a particular element in a list;
-    private Integer index;
+    private final Integer index;
 
     public TeasyElementData(WebElement element, By by) {
-        this.element = element;
-        this.by = by;
+        this(element, by, null, null);
     }
 
     public TeasyElementData(WebElement element, By by, int index) {
-        this(element, by);
-        this.index = index;
+        this(element, by, null, index);
     }
 
     public TeasyElementData(TeasyElement context, WebElement element, By by) {
-        this(element, by);
-        this.searchContext = context;
+        this(element, by, context, null);
     }
 
-    public TeasyElementData(TeasyElement context, WebElement element, By by, int index) {
-        this(context, element, by);
+    public TeasyElementData(WebElement element, By by, TeasyElement context, Integer index) {
+        this.context = context;
+        this.element = element;
+        this.by = by;
         this.index = index;
     }
 
@@ -42,7 +41,7 @@ public class TeasyElementData {
     }
 
     public TeasyElement getSearchContext() {
-        return searchContext;
+        return context;
     }
 
     public By getBy() {
@@ -52,5 +51,4 @@ public class TeasyElementData {
     public Integer getIndex() {
         return index;
     }
-
 }

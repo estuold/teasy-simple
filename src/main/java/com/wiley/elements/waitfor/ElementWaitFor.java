@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.function.Function;
 
 /**
- * Created by vefimov on 04/09/2017.
+ * Conditions for element
  */
 public interface ElementWaitFor {
     void displayed();

@@ -9,6 +9,8 @@ import com.wiley.elements.waitfor.ElementWaitFor;
 import com.wiley.elements.waitfor.VisibleElementWaitFor;
 import com.wiley.holders.DriverHolder;
 
+import static com.wiley.holders.DriverHolder.*;
+
 /**
  * Represents element that is displayed for the user
  */
@@ -20,21 +22,21 @@ public class VisibleTeasyElement extends BaseTeasyElement {
 
     @Override
     public Should should() {
-        return new VisibleShould(this, new TeasyFluentWait<>(DriverHolder.getDriver()));
+        return new VisibleShould(this, new TeasyFluentWait<>(getDriver(), new SearchStrategy()));
     }
 
     @Override
     public Should should(SearchStrategy strategy) {
-        return new VisibleShould(this, strategy, new TeasyFluentWait<>(DriverHolder.getDriver()));
+        return new VisibleShould(this, strategy, new TeasyFluentWait<>(getDriver(), new SearchStrategy()));
     }
 
     @Override
     public ElementWaitFor waitFor() {
-        return new VisibleElementWaitFor(this, new TeasyFluentWait<>(DriverHolder.getDriver()));
+        return new VisibleElementWaitFor(this, new TeasyFluentWait<>(getDriver(), new SearchStrategy()));
     }
 
     @Override
     public ElementWaitFor waitFor(SearchStrategy strategy) {
-        return new VisibleElementWaitFor(this, strategy, new TeasyFluentWait<>(DriverHolder.getDriver()));
+        return new VisibleElementWaitFor(this, strategy, new TeasyFluentWait<>(getDriver(), new SearchStrategy()));
     }
 }

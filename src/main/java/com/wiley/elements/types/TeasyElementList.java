@@ -1,5 +1,8 @@
-package com.wiley.elements;
+package com.wiley.elements.types;
 
+import com.wiley.elements.SearchStrategy;
+import com.wiley.elements.TeasyElement;
+import com.wiley.elements.TeasyFluentWait;
 import com.wiley.elements.should.EmptyListShould;
 import com.wiley.elements.should.GeneralListShould;
 import com.wiley.elements.should.ListShould;
@@ -26,11 +29,15 @@ public class TeasyElementList implements List<TeasyElement> {
     }
 
     public ListShould should() {
+        return should(new SearchStrategy());
+    }
+
+    public ListShould should(SearchStrategy strategy) {
         ListShould should;
         if (this.size() == 0) {
-            should = new EmptyListShould(this, new TeasyFluentWait<>(DriverHolder.getDriver()));
+            should = new EmptyListShould(this, new TeasyFluentWait<>(DriverHolder.getDriver(), strategy));
         } else {
-            should = new GeneralListShould(this, new TeasyFluentWait<>(DriverHolder.getDriver()));
+            should = new GeneralListShould(this, new TeasyFluentWait<>(DriverHolder.getDriver(), strategy));
         }
         return should;
     }

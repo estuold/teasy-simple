@@ -12,11 +12,7 @@ import java.util.function.Function;
 public class TeasyFluentWait<T> extends FluentWait<T> {
 
     //default condition should stop execution in case of failure
-    private boolean nullOnFailure = false;
-
-    public TeasyFluentWait(T input) {
-        this(input, new SearchStrategy());
-    }
+    private boolean nullOnFailure;
 
     public TeasyFluentWait(T input, SearchStrategy strategy) {
         super(input);

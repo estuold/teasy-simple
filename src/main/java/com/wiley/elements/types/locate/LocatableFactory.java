@@ -1,40 +1,44 @@
-package com.wiley.elements.types;
+package com.wiley.elements.types.locate;
 
-import com.wiley.elements.*;
+import com.wiley.elements.types.Locatable;
+import com.wiley.elements.TeasyElement;
+import com.wiley.elements.TeasyElementData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-class ElementLocatorFactory {
+public class LocatableFactory {
 
     private TeasyElementData elementData;
     private WebDriver driver;
 
-    ElementLocatorFactory(TeasyElementData elementData, WebDriver driver) {
+    public LocatableFactory(TeasyElementData elementData, WebDriver driver) {
         this.elementData = elementData;
         this.driver = driver;
     }
 
-    public Locator getLocator() {
+    public Locatable get() {
         TeasyElement searchContext = elementData.getSearchContext();
         By by = elementData.getBy();
         Integer index = elementData.getIndex();
         WebElement element = elementData.getElement();
+        Locatable locatable;
         if (searchContext != null && by != null && index != null) {
             //element from list in searchContext with index
-            return new FindElementsLocator(searchContext, by, index);
+            locatable = new ElementsLocatable(searchContext, by, index);
         } else if (by != null && index != null) {   //element from list with index
-            return new FindElementsLocator(driver, by, index);
+            locatable = new ElementsLocatable(driver, by, index);
         } else if (searchContext != null && by != null) {
             //element in searchContext
-            return new FindElementLocator(searchContext, by);
+            locatable = new ElementLocatable(searchContext, by);
         } else if (by != null) {
             //element
-            return new FindElementLocator(driver, by);
+            locatable = new ElementLocatable(driver, by);
         } else {
-            //parent element (locator is null - as a sign that we should take parent)
+            //parent element (locatable is null - as a sign that we should take parent)
             TeasyElement ourWebElement = (TeasyElement) element;
-            return new FindParentElementLocator(driver, ourWebElement.getLocator().getBy());
+            locatable = new ParentElementLocatable(driver, ourWebElement.getLocatable().getBy());
         }
+        return locatable;
     }
 }

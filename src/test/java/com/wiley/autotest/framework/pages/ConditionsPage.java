@@ -2,7 +2,7 @@ package com.wiley.autotest.framework.pages;
 
 import com.wiley.page.BasePage;
 import com.wiley.elements.SearchStrategy;
-import com.wiley.elements.TeasyElementList;
+import com.wiley.elements.types.TeasyElementList;
 import org.openqa.selenium.By;
 
 import java.util.Arrays;
