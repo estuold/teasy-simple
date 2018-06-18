@@ -1,5 +1,6 @@
 package com.wiley.basetests;
 
+import com.wiley.assertions.MethodType;
 import com.wiley.holders.AssertionsHolder;
 import org.testng.ITestResult;
 
@@ -8,16 +9,9 @@ import org.testng.ITestResult;
  */
 public class WebServiceBaseTest extends BaseTest {
 
-    protected void setThrowable(ITestResult testResult, String methodType) {
+    protected void setThrowable(ITestResult testResult, MethodType methodType) {
         final Throwable testResultThrowable = testResult.getThrowable();
-        String message = testResultThrowable.getMessage() != null
-                ? testResultThrowable.getMessage()
-                : testResultThrowable.getCause().getMessage();
 
-        if (message == null) {
-            message = methodType + " failed";
-        }
-
-        AssertionsHolder.softAssert().add(message);
+        AssertionsHolder.softAssert().add(testResultThrowable, methodType);
     }
 }

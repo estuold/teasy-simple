@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class SoftAssert extends Assertion {
 
-    private final List<String> errors = new LinkedList<>();
+    private final List<TeasyError> errors = new LinkedList<>();
 
     @Override
     protected void doAssert(IAssert<?> assertCommand) {
@@ -24,32 +24,35 @@ public class SoftAssert extends Assertion {
             assertCommand.doAssert();
             onAssertSuccess(assertCommand);
         } catch (AssertionError error) {
-            add(error.getMessage());
+            add(error, MethodType.CONFIG);
             onAssertFailure(assertCommand, error);
         }
     }
 
-    public void addWithScreenshot(String error) {
-        add(error);
-        new Screenshoter().takeScreenshot(error, TestParamsHolder.getTestName());
+    public void addWithScreenshot(Throwable throwable, MethodType methodType) {
+        TeasyError teasyError = new TeasyError(throwable, methodType);
+        errors.add(teasyError);
+        new Screenshoter().takeScreenshot(teasyError.getErrorMessage(), TestParamsHolder.getTestName());
     }
 
-    public void add(String error) {
-        errors.add(error);
+    public void add(Throwable throwable, MethodType methodType) {
+        TeasyError teasyError = new TeasyError(throwable, methodType);
+        errors.add(teasyError);
     }
 
     public void assertAll() {
         if (hasErrors()) {
             StringBuilder sb = new StringBuilder("The following asserts failed:");
             boolean first = true;
-            for (String e : errors) {
+            for (TeasyError e : errors) {
                 if (first) {
                     first = false;
                 } else {
                     sb.append(",");
                 }
                 sb.append("\n\t");
-                sb.append(e);
+                sb.append(e.getErrorMessage());
+                sb.append(e.getStackTrace());
             }
             throw new AssertionError(sb.toString());
         }
