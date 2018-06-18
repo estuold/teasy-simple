@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class SoftAssert extends Assertion {
 
-    private final List<String> errors = new LinkedList<>();
+    private final List<TeasyError> errors = new LinkedList<>();
 
     @Override
     protected void doAssert(IAssert<?> assertCommand) {
@@ -24,38 +24,52 @@ public class SoftAssert extends Assertion {
             assertCommand.doAssert();
             onAssertSuccess(assertCommand);
         } catch (AssertionError error) {
-            add(error.getMessage());
+            add(error, MethodType.CONFIG);
             onAssertFailure(assertCommand, error);
         }
     }
 
-    public void addWithScreenshot(String error) {
-        add(error);
-        new Screenshoter().takeScreenshot(error, TestParamsHolder.getTestName());
+    public void addWithScreenshot(Throwable throwable, MethodType methodType) {
+        TeasyError teasyError = new TeasyError(throwable, methodType);
+        errors.add(teasyError);
+        new Screenshoter().takeScreenshot(teasyError.getErrorMessage(), TestParamsHolder.getTestName());
     }
 
-    public void add(String error) {
-        errors.add(error);
+    public void add(Throwable throwable, MethodType methodType) {
+        TeasyError teasyError = new TeasyError(throwable, methodType);
+        errors.add(teasyError);
     }
 
     public void assertAll() {
         if (hasErrors()) {
-            StringBuilder sb = new StringBuilder("The following asserts failed:");
-            boolean first = true;
-            for (String e : errors) {
-                if (first) {
-                    first = false;
-                } else {
-                    sb.append(",");
-                }
-                sb.append("\n\t");
-                sb.append(e);
+            StringBuilder sb = new StringBuilder();
+            sb.append("Next ");
+            sb.append(errors.size());
+            sb.append(" assert");
+            if (errors.size() > 1) {
+                sb.append("s");
             }
+            sb.append(" failed:");
+            for (TeasyError e : errors) {
+                sb.append("\n\t");
+                sb.append((errors.indexOf(e) + 1));
+                sb.append(" fail:");
+                sb.append("\n\t");
+                sb.append(e.getStackTraceAsString());
+                sb.append("\n\t");
+                sb.append("####################################################################################################");
+                sb.append("\n\t");
+                sb.append("####################################################################################################");
+                sb.append("\n\t");
+                sb.append("####################################################################################################");
+                sb.append("\n\t");
+            }
+            errors.clear();
             throw new AssertionError(sb.toString());
         }
     }
 
-    private boolean hasErrors() {
+    public boolean hasErrors() {
         return !errors.isEmpty();
     }
 }

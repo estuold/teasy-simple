@@ -1,5 +1,6 @@
 package com.wiley.basetests;
 
+import com.wiley.assertions.MethodType;
 import com.wiley.holders.AssertionsHolder;
 import com.wiley.page.BasePage;
 import com.wiley.page.PageProvider;
@@ -21,16 +22,9 @@ public class SeleniumBaseTest extends BaseTest {
         return PageProvider.get(page, url);
     }
 
-    protected void setThrowable(ITestResult testResult, String methodType) {
+    protected void setThrowable(ITestResult testResult, MethodType methodType) {
         final Throwable testResultThrowable = testResult.getThrowable();
-        String message = testResultThrowable.getMessage() != null
-                ? testResultThrowable.getMessage()
-                : testResultThrowable.getCause().getMessage();
 
-        if (message == null) {
-            message = methodType + " failed";
-        }
-
-        AssertionsHolder.softAssert().addWithScreenshot(message);
+        AssertionsHolder.softAssert().addWithScreenshot(testResultThrowable, MethodType.TEST);
     }
 }

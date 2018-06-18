@@ -1,5 +1,6 @@
 package com.wiley.basetests;
 
+import com.wiley.assertions.MethodType;
 import com.wiley.assertions.SoftAssert;
 import com.wiley.holders.AssertionsHolder;
 import com.wiley.holders.TestParamsHolder;
@@ -28,7 +29,7 @@ public abstract class BaseTest implements IConfigurable, IHookable {
 
         synchronized (SYNC) {
             if (testResult.getThrowable() != null) {
-                setThrowable(testResult, "Configuration method");
+                setThrowable(testResult, MethodType.CONFIG);
             }
         }
     }
@@ -49,12 +50,14 @@ public abstract class BaseTest implements IConfigurable, IHookable {
 
         synchronized (SYNC) {
             if (testResult.getThrowable() != null) {
-                setThrowable(testResult, "Test");
+                setThrowable(testResult, MethodType.TEST);
+            }
 
+            if (AssertionsHolder.softAssert().hasErrors()) {
                 AssertionsHolder.softAssert().assertAll();
             }
         }
     }
 
-    protected abstract void setThrowable(ITestResult testResult, String methodType);
+    protected abstract void setThrowable(ITestResult testResult, MethodType methodType);
 }
