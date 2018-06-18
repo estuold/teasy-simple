@@ -19,7 +19,7 @@ public class BaseUnitTest extends SeleniumBaseTest {
         return get(page, "file://" + getClass().getResource("/html/framework/").getPath() + fileName);
     }
 
-    protected void setThrowable(ITestResult testResult, String methodType) {
+    protected void setThrowable(ITestResult testResult, MethodType methodType) {
         final Throwable testResultThrowable = testResult.getThrowable();
 
         if (!(testResultThrowable.getCause() instanceof StopTestExecutionException)

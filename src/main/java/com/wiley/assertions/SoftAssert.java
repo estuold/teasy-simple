@@ -64,6 +64,7 @@ public class SoftAssert extends Assertion {
                 sb.append("####################################################################################################");
                 sb.append("\n\t");
             }
+            errors.clear();
             throw new AssertionError(sb.toString());
         }
     }
