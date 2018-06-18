@@ -51,7 +51,9 @@ public abstract class BaseTest implements IConfigurable, IHookable {
         synchronized (SYNC) {
             if (testResult.getThrowable() != null) {
                 setThrowable(testResult, MethodType.TEST);
+            }
 
+            if (AssertionsHolder.softAssert().hasErrors()) {
                 AssertionsHolder.softAssert().assertAll();
             }
         }

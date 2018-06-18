@@ -42,23 +42,33 @@ public class SoftAssert extends Assertion {
 
     public void assertAll() {
         if (hasErrors()) {
-            StringBuilder sb = new StringBuilder("The following asserts failed:");
-            boolean first = true;
+            StringBuilder sb = new StringBuilder();
+            sb.append("Next ");
+            sb.append(errors.size());
+            sb.append(" assert");
+            if (errors.size() > 1) {
+                sb.append("s");
+            }
+            sb.append(" failed:");
             for (TeasyError e : errors) {
-                if (first) {
-                    first = false;
-                } else {
-                    sb.append(",");
-                }
                 sb.append("\n\t");
-                sb.append(e.getErrorMessage());
-                sb.append(e.getStackTrace());
+                sb.append((errors.indexOf(e) + 1));
+                sb.append(" fail:");
+                sb.append("\n\t");
+                sb.append(e.getStackTraceAsString());
+                sb.append("\n\t");
+                sb.append("####################################################################################################");
+                sb.append("\n\t");
+                sb.append("####################################################################################################");
+                sb.append("\n\t");
+                sb.append("####################################################################################################");
+                sb.append("\n\t");
             }
             throw new AssertionError(sb.toString());
         }
     }
 
-    private boolean hasErrors() {
+    public boolean hasErrors() {
         return !errors.isEmpty();
     }
 }

@@ -1,8 +1,8 @@
 package com.wiley.assertions;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TeasyError {
 
@@ -11,7 +11,7 @@ public class TeasyError {
 
     TeasyError(Throwable throwable, MethodType methodType) {
         this.methodType = methodType;
-        this.throwable = throwable;
+        this.throwable = throwable instanceof InvocationTargetException ? ((InvocationTargetException) throwable).getTargetException() : throwable;
     }
 
     public String getErrorMessage() {
@@ -23,17 +23,9 @@ public class TeasyError {
         return message;
     }
 
-    public List<String> getStackTrace() {
-        List<String> s = new ArrayList<>();
-        if (throwable instanceof InvocationTargetException) {
-            StackTraceElement[] stackTrace = ((InvocationTargetException) throwable).getTargetException().getStackTrace();
-            for (StackTraceElement stackTraceElement : stackTrace) {
-                s.add(stackTraceElement.toString());
-            }
-        } else {
-
-        }
-
-        return s;
+    public String getStackTraceAsString() {
+        StringWriter stringWriter = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(stringWriter));
+        return stringWriter.toString();
     }
 }
