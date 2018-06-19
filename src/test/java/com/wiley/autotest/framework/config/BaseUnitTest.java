@@ -24,7 +24,7 @@ public class BaseUnitTest extends SeleniumBaseTest {
 
         if (!(testResultThrowable.getCause() instanceof StopTestExecutionException)
                 && !(testResultThrowable.getCause() instanceof NoSuchElementException)) {
-            AssertionsHolder.softAssert().addWithScreenshot(testResultThrowable, MethodType.TEST);
+            AssertionsHolder.softAssert().add(testResultThrowable, MethodType.TEST);
         }
     }
 }

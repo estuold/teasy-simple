@@ -25,6 +25,6 @@ public class SeleniumBaseTest extends BaseTest {
     protected void setThrowable(ITestResult testResult, MethodType methodType) {
         final Throwable testResultThrowable = testResult.getThrowable();
 
-        AssertionsHolder.softAssert().addWithScreenshot(testResultThrowable, MethodType.TEST);
+        AssertionsHolder.softAssert().add(testResultThrowable, MethodType.TEST);
     }
 }

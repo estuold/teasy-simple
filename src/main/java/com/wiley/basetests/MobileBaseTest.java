@@ -21,6 +21,6 @@ public class MobileBaseTest extends BaseTest {
     protected void setThrowable(ITestResult testResult, MethodType methodType) {
         final Throwable testResultThrowable = testResult.getThrowable();
 
-        AssertionsHolder.softAssert().addWithScreenshot(testResultThrowable, methodType);
+        AssertionsHolder.softAssert().add(testResultThrowable, methodType);
     }
 }

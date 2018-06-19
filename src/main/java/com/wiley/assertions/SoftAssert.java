@@ -1,5 +1,6 @@
 package com.wiley.assertions;
 
+import com.wiley.holders.DriverHolder;
 import com.wiley.holders.TestParamsHolder;
 import com.wiley.screenshots.Screenshoter;
 import org.testng.asserts.Assertion;
@@ -24,20 +25,17 @@ public class SoftAssert extends Assertion {
             assertCommand.doAssert();
             onAssertSuccess(assertCommand);
         } catch (AssertionError error) {
-            add(error, MethodType.CONFIG);
+            add(error, MethodType.TEST);
             onAssertFailure(assertCommand, error);
         }
-    }
-
-    public void addWithScreenshot(Throwable throwable, MethodType methodType) {
-        TeasyError teasyError = new TeasyError(throwable, methodType);
-        errors.add(teasyError);
-        new Screenshoter().takeScreenshot(teasyError.getErrorMessage(), TestParamsHolder.getTestName());
     }
 
     public void add(Throwable throwable, MethodType methodType) {
         TeasyError teasyError = new TeasyError(throwable, methodType);
         errors.add(teasyError);
+        if (DriverHolder.getDriver() != null) {
+            new Screenshoter().takeScreenshot(teasyError.getErrorMessage(), TestParamsHolder.getTestName());
+        }
     }
 
     public void assertAll() {
