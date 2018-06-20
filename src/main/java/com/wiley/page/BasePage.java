@@ -50,10 +50,6 @@ public class BasePage {
         return page;
     }
 
-    protected final <E extends BasePage> E getHelper(final Class<E> target) {
-        return PageProvider.get(target);
-    }
-
     protected SoftAssert softAssert() {
         return AssertionsHolder.softAssert();
     }

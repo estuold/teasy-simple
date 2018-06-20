@@ -40,19 +40,18 @@ public abstract class BaseTeasyElement implements TeasyElement, org.openqa.selen
     BaseTeasyElement(TeasyElementData elementData) {
         this.locatable = new LocatableFactory(elementData, getDriver()).get();
         this.repeatLocateElementCounter = 0;
-        defineWrappedElement(elementData);
+        this.wrappedElement = getWrappedElement(elementData);
     }
 
-    private void defineWrappedElement(TeasyElementData elementData) {
+    private WebElement getWrappedElement(TeasyElementData elementData) {
         WebElement element = elementData.getElement();
-
         if (elementData.getSearchContext() == null
                 && elementData.getBy() == null
                 && elementData.getIndex() == null) {
             //parent element (by is null - as a sign that we should take parent)
             element = getParentElement(((TeasyElement) element).getWrappedWebElement());
         }
-        this.wrappedElement = element instanceof TeasyElement
+        return element instanceof TeasyElement
                 ? ((TeasyElement) element).getWrappedWebElement()
                 : element;
     }
@@ -68,7 +67,6 @@ public abstract class BaseTeasyElement implements TeasyElement, org.openqa.selen
         for (int i = 0; i < level; i++) {
             parentXpath.append("/..");
         }
-
         return new DomElementLookUp(getDriver(), getAgainLocateStrategy(), this).find(By.xpath(parentXpath
                 .toString()));
     }
