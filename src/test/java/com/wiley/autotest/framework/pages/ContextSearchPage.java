@@ -1,7 +1,7 @@
 package com.wiley.autotest.framework.pages;
 
-import com.wiley.page.BasePage;
 import com.wiley.elements.TeasyElement;
+import com.wiley.page.BasePage;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 

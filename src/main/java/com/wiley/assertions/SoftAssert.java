@@ -49,25 +49,31 @@ public class SoftAssert extends Assertion {
             }
             sb.append(" failed:");
             for (TeasyError e : errors) {
-                sb.append("\n\t");
-                sb.append((errors.indexOf(e) + 1));
+                sb.append("\n");
+                sb.append(ordinal((errors.indexOf(e) + 1)));
                 sb.append(" fail:");
                 sb.append("\n\t");
                 sb.append(e.getStackTraceAsString());
-                sb.append("\n\t");
-                sb.append("####################################################################################################");
-                sb.append("\n\t");
-                sb.append("####################################################################################################");
-                sb.append("\n\t");
-                sb.append("####################################################################################################");
-                sb.append("\n\t");
+                sb.append("------------------------------------------------------------------------------------------------------");
             }
             errors.clear();
             throw new AssertionError(sb.toString());
         }
     }
 
-    public boolean hasErrors() {
+    private boolean hasErrors() {
         return !errors.isEmpty();
+    }
+
+    private String ordinal(int i) {
+        String[] suffixes = new String[]{"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
+        switch (i % 100) {
+            case 11:
+            case 12:
+            case 13:
+                return i + "th";
+            default:
+                return i + suffixes[i % 10];
+        }
     }
 }
