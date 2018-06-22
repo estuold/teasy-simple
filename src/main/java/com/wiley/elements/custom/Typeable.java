@@ -1,12 +1,12 @@
 package com.wiley.elements.custom;
 
-public interface Inputable {
+public interface Typeable {
 
     void type(String text);
 
     void clear();
 
-    void typeAnClear(String text);
+    void clearAndType(String text);
 
     String getValue();
 }

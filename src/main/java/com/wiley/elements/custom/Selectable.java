@@ -15,8 +15,6 @@ public interface Selectable {
 
     void selectRandom();
 
-    void selectRandomByAnotherTextThan(String text);
-
     TeasyElement getSelectedOption();
 
     String getSelectedText();
