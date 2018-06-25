@@ -27,10 +27,13 @@ import static com.wiley.holders.DriverHolder.getDriver;
  */
 public class WebDriverFactory {
 
-    private static final ThreadLocal<Integer> tryToCreateDriverCount = ThreadLocal.withInitial(() -> -1);
+    private static final int START_COUNT = 0;
+    private static final ThreadLocal<Integer> tryToCreateDriverCount = ThreadLocal.withInitial(() -> START_COUNT);
+    private static final ThreadLocal<Integer> restartDriverAfterNumberOfTests = ThreadLocal.withInitial(() -> START_COUNT);
 
     public static void initDriver() {
-        if (getDriver() != null && isBrowserDead()) {
+        restartDriverAfterNumberOfTests.set(restartDriverAfterNumberOfTests.get() + 1);
+        if (getDriver() != null && (isBrowserDead() || isNeedToRestartDriver())) {
             quitWebDriver();
         }
         if (getDriver() == null) {
@@ -54,11 +57,13 @@ public class WebDriverFactory {
     }
 
     private static void lastTryToCreateDriver(Throwable t) {
-        if (tryToCreateDriverCount.get() < 5) {
+        if (tryToCreateDriverCount.get() < Configuration.tryToStartDriverCount) {
             tryToCreateDriverCount.set(tryToCreateDriverCount.get() + 1);
             initDriver();
         } else {
-            throw new WebDriverException("Unable to init driver after " + tryToCreateDriverCount.get() + " attempts! Cause: " + t.getMessage(), t);
+            Integer passCount = tryToCreateDriverCount.get();
+            tryToCreateDriverCount.set(START_COUNT);
+            throw new WebDriverException("Unable to init driver after " + passCount + " attempts! Cause: " + t.getMessage(), t);
         }
     }
 
@@ -107,8 +112,12 @@ public class WebDriverFactory {
         }
     }
 
+    private static boolean isNeedToRestartDriver() {
+        return restartDriverAfterNumberOfTests.get() > Configuration.restartCount;
+    }
+
     private static void quitWebDriver() {
-        tryToCreateDriverCount.set(1);
+        restartDriverAfterNumberOfTests.set(START_COUNT);
         try {
             getDriver().quit();
         } catch (Throwable t) {
