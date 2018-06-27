@@ -1,18 +1,22 @@
 package com.wiley.driver;
 
+import com.wiley.config.Configuration;
 import com.wiley.driver.factory.TeasyDriver;
 import com.wiley.driver.frames.FramesTransparentWebDriver;
 import com.wiley.driver.frames.WebDriverDecorator;
 import com.wiley.holders.DriverHolder;
 import com.wiley.holders.TestParamsHolder;
+import com.wiley.utils.Report;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.SessionId;
+
+import java.net.InetAddress;
+import java.net.URL;
 
 import static com.wiley.holders.DriverHolder.getDriver;
 
@@ -23,20 +27,24 @@ import static com.wiley.holders.DriverHolder.getDriver;
  */
 public class WebDriverFactory {
 
-    private static final ThreadLocal<Integer> count = ThreadLocal.withInitial(() -> -1);
-    private static final ThreadLocal<Integer> driverRestartCount = ThreadLocal.withInitial(() -> 0);
-    private static final ThreadLocal<UnexpectedAlertBehaviour> alertCapability = ThreadLocal.withInitial(() -> UnexpectedAlertBehaviour.ACCEPT);
+    private static final int START_COUNT = 0;
+    private static final ThreadLocal<Integer> tryToCreateDriverCount = ThreadLocal.withInitial(() -> START_COUNT);
+    private static final ThreadLocal<Integer> restartDriverAfterNumberOfTests = ThreadLocal.withInitial(() -> START_COUNT);
 
     public static void initDriver() {
-        if (getDriver() == null || isBrowserDead()) {
+        restartDriverAfterNumberOfTests.set(restartDriverAfterNumberOfTests.get() + 1);
+        if (getDriver() != null && (isBrowserDead() || isNeedToRestartDriver())) {
+            quitWebDriver();
+        }
+        if (getDriver() == null) {
             try {
                 FramesTransparentWebDriver driver = createDriver();
+
                 addShutdownHook(driver);
 
                 setGridParams(driver);
                 setDriverParams(driver);
                 setMobileParams(driver);
-//                setCustomElementFactory();
             } catch (Throwable t) {
                 lastTryToCreateDriver(t);
             }
@@ -45,25 +53,19 @@ public class WebDriverFactory {
 
     private static FramesTransparentWebDriver createDriver() {
         TeasyDriver teasyDriver = new TeasyDriver();
-        FramesTransparentWebDriver driver = new FramesTransparentWebDriver(teasyDriver.init());
-        return driver;
+        return new FramesTransparentWebDriver(teasyDriver.init());
     }
 
     private static void lastTryToCreateDriver(Throwable t) {
-        if (driverRestartCount.get() < 1) {
-//            TestUtils.waitForSomeTime(5000, "Wait for retry create driver");
-//            new Report("*****Try to wrap driver, count - " + driverRestartCount.get() + " *****").jenkins();
+        if (tryToCreateDriverCount.get() < Configuration.tryToStartDriverCount) {
+            tryToCreateDriverCount.set(tryToCreateDriverCount.get() + 1);
             initDriver();
         } else {
-            throw new WebDriverException("*****Unable to wrap driver after " + driverRestartCount.get() + " attempts!***** " + t.getMessage(), t);
+            Integer passCount = tryToCreateDriverCount.get();
+            tryToCreateDriverCount.set(START_COUNT);
+            throw new WebDriverException("Unable to init driver after " + passCount + " attempts! Cause: " + t.getMessage(), t);
         }
     }
-
-//    private void setCustomElementFactory() {
-//        if (configuration.getCustomElementFactoryClass() != null) {
-//            SeleniumHolder.setCustomElementFactoryClass(configuration.getCustomElementFactoryClass().getName());
-//        }
-//    }
 
     private static void setDriverParams(FramesTransparentWebDriver driver) {
         DriverHolder.setDriver(driver);
@@ -83,10 +85,10 @@ public class WebDriverFactory {
         try {
             SessionId sessionId = ((RemoteWebDriver) driver.getDriver()).getSessionId();
             TestParamsHolder.setSessionId(sessionId);
-//            String nodeIp = Configuration.runWithGrid ? getNodeIpBySessionId(sessionId, settings.getGridHubUrl()) : InetAddress.getLocalHost().getHostAddress();
-//            TestParamsHolder.setNodeIP(nodeIp);
+            String nodeIp = Configuration.runWithGrid ? new GridApi(new URL(Configuration.gridHubUrl), sessionId).getNodeIp() : InetAddress.getLocalHost().getHostAddress();
+            TestParamsHolder.setNodeIP(nodeIp);
         } catch (Throwable ignored) {
-//            new Report("*****Throwable occurs when set node id*****", ignored).everywhere();
+            Report.jenkins("Throwable occurs when set node id.", ignored);
         }
     }
 
@@ -105,17 +107,21 @@ public class WebDriverFactory {
             }
             return false;
         } catch (Throwable t) {
-//            new Report("*****BROWSER IS DEAD ERROR***** ", t).everywhere();
+            Report.jenkins("*****BROWSER IS DEAD ERROR***** ", t);
             return true;
         }
     }
 
+    private static boolean isNeedToRestartDriver() {
+        return restartDriverAfterNumberOfTests.get() > Configuration.restartCount;
+    }
+
     private static void quitWebDriver() {
-        count.set(1);
+        restartDriverAfterNumberOfTests.set(START_COUNT);
         try {
             getDriver().quit();
         } catch (Throwable t) {
-//            new Report("*****ERROR***** TRYING TO QUIT DRIVER ", t).everywhere();
+            Report.jenkins("*****TRYING TO QUIT DRIVER***** ", t);
         }
         DriverHolder.setDriver(null);
     }

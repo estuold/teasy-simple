@@ -22,6 +22,10 @@ public final class Configuration {
 
     public static boolean headless = Boolean.parseBoolean(System.getProperty("teasy.headless", "false"));
 
+    public static int restartCount = Integer.parseInt(System.getProperty("teasy.restart.count", "5"));
+
+    public static int tryToStartDriverCount = Integer.parseInt(System.getProperty("teasy.start.count", "3"));
+
     //null means that default element factory will be used
     public static String elementFactoryClass = System.getProperty("teasy.elementFactoryClass");
 

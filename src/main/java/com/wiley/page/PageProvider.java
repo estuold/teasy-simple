@@ -28,7 +28,9 @@ public class PageProvider {
     private static <T extends BasePage> T getPage(Class<T> page) {
         String className = page.getName();
         if (map.get().containsKey(className)) {
-            return (T) map.get().get(className);
+            T reInitPage = (T) map.get().get(className);
+            reInitPage.init(DriverHolder.getDriver());
+            return reInitPage;
         } else {
             Object value;
             try {
