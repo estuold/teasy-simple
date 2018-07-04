@@ -28,7 +28,7 @@ public class Screenshoter {
         return Files.readAllBytes(screenShot.toPath());
     }
 
-    public void takeScreenshot(final String errorMessage, final String testName) {
+    public String takeScreenshot(final String errorMessage, final String testName) {
         try {
             final BufferedImage image = new TeasyScreenshot(DriverHolder.getDriver()).fullPage().getImage();
 
@@ -38,12 +38,14 @@ public class Screenshoter {
             final File screenShotWithProjectPath = new File(pathName);
             ImageIO.write(image, "png", screenShotWithProjectPath);
             attachScreenShotToAllure(errorMessage, testName, screenShotWithProjectPath);
+            return screenShotWithProjectPath.getAbsolutePath();
         } catch (IOException e) {
             e.printStackTrace();
+            return "";
         } catch (UnhandledAlertException alertException) {
             Alert alert = DriverHolder.getDriver().switchTo().alert();
             alert.dismiss();
-            takeScreenshot(errorMessage, testName);
+            return takeScreenshot(errorMessage, testName);
         }
     }
 
