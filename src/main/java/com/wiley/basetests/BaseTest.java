@@ -2,9 +2,11 @@ package com.wiley.basetests;
 
 import com.wiley.assertions.MethodType;
 import com.wiley.assertions.SoftAssert;
+import com.wiley.config.InitConfigListener;
 import com.wiley.holders.AssertionsHolder;
 import com.wiley.holders.TestParamsHolder;
 import org.testng.*;
+import org.testng.annotations.Listeners;
 
 /**
  * Abstract base class for a TestNG tests
@@ -13,6 +15,7 @@ import org.testng.*;
  * It processes failed assertions and calls
  * {@link SoftAssert#assertAll()}
  */
+@Listeners(InitConfigListener.class)
 public abstract class BaseTest implements IConfigurable, IHookable {
 
     private static final Object SYNC = new Object();
