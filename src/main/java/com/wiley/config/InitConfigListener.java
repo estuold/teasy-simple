@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Listener for invoked all implementations of {@link AbstractSetConfig#set()}.
+ * Listener for invoked all implementations of {@link CustomizableConfig#set()}.
  * Will be run before all tests started.
  */
 public class InitConfigListener implements IExecutionListener {
@@ -16,12 +16,12 @@ public class InitConfigListener implements IExecutionListener {
     @Override
     public void onExecutionStart() {
         try {
-            Set<Class<? extends AbstractSetConfig>> conf = new Reflections("").getSubTypesOf(AbstractSetConfig.class);
-            Iterator<Class<? extends AbstractSetConfig>> iterator = conf.iterator();
+            Set<Class<? extends CustomizableConfig>> conf = new Reflections("com.wiley").getSubTypesOf(CustomizableConfig.class);
+            Iterator<Class<? extends CustomizableConfig>> iterator = conf.iterator();
             while (iterator.hasNext()) {
-                Class<? extends AbstractSetConfig> next = iterator.next();
+                Class<? extends CustomizableConfig> next = iterator.next();
                 Object instance = Class.forName(next.getName()).newInstance();
-                ((AbstractSetConfig) instance).set();
+                ((CustomizableConfig) instance).set();
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ignored) {
             Report.jenkins("Exception when try to invoke method set() from AbstractSetConfig.", ignored);

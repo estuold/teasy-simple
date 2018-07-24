@@ -6,7 +6,7 @@ package com.wiley.config;
  * before start all tests.
  * Method set() will be invoked in {@link InitConfigListener#onExecutionStart()}.
  */
-public abstract class AbstractSetConfig {
+public interface CustomizableConfig {
 
-    public abstract void set();
+    void set();
 }
