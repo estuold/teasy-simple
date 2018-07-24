@@ -13,7 +13,7 @@ public class TestParamsHolder {
     private static ThreadLocal<String> platform = new ThreadLocal<>();
     private static ThreadLocal<String> browser = new ThreadLocal<>();
     private static ThreadLocal<String> nodeIP = new ThreadLocal<>();
-    private static ThreadLocal<Integer> seleniumPort = new ThreadLocal<>();
+    private static ThreadLocal<Integer> chromePort = new ThreadLocal<>();
     private static ThreadLocal<SessionId> sessionId = new ThreadLocal<>();
 
     public static String getTestName() {
@@ -48,12 +48,12 @@ public class TestParamsHolder {
         TestParamsHolder.nodeIP.set(nodeIP);
     }
 
-    public static Integer getSeleniumPort() {
-        return seleniumPort.get();
+    public static Integer getChromePort() {
+        return chromePort.get();
     }
 
-    public static void setSeleniumPort(Integer seleniumPort) {
-        TestParamsHolder.seleniumPort.set(seleniumPort);
+    public static void setChromePort(Integer chromePort) {
+        TestParamsHolder.chromePort.set(chromePort);
     }
 
     public static SessionId getSessionId() {

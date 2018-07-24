@@ -157,7 +157,7 @@ public class StandaloneDriverFactory implements DriverFactory {
                         new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless).get()
                 )
         );
-        TestParamsHolder.setSeleniumPort(defaultService.getUrl().getPort());
+        TestParamsHolder.setChromePort(defaultService.getUrl().getPort());
         return chromeDriver;
     }
 
