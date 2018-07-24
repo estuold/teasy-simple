@@ -1,5 +1,6 @@
 package com.wiley.screenshots;
 
+import com.wiley.config.Configuration;
 import com.wiley.holders.DriverHolder;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.Alert;
@@ -30,7 +31,12 @@ public class Screenshoter {
 
     public String takeScreenshot(final String errorMessage, final String testName) {
         try {
-            final BufferedImage image = new TeasyScreenshot(DriverHolder.getDriver()).fullPage().getImage();
+            BufferedImage image;
+            if (Configuration.browser.equals("chrome")) {
+                image = ImageIO.read(new ChromeScreenshoter().getFullScreenshotAs(OutputType.FILE));
+            } else {
+                image = ImageIO.read(((TakesScreenshot)DriverHolder.getDriver()).getScreenshotAs(OutputType.FILE));
+            }
 
             printStrings(image, removeNL(testName, errorMessage));
 
