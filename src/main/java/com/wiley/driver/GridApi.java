@@ -37,7 +37,7 @@ class GridApi {
                     .connect(hubUrl.getProtocol() + "://" + hubUrl.getHost() + ":" + hubUrl.getPort() + "/grid/api/testsession?session=" + sessionId)
                     .ignoreContentType(true)
                     .ignoreHttpErrors(true)
-                    .method(Connection.Method.POST)
+                    .method(Connection.Method.GET)
                     .execute()
                     .parse()
                     .text();

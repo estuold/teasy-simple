@@ -10,6 +10,7 @@ import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -150,11 +151,14 @@ public class StandaloneDriverFactory implements DriverFactory {
     private WebDriver chrome(DesiredCapabilities customCaps) {
         DriverHolder.setDriverName(CHROME);
         ChromeDriverManager.getInstance().setup();
-        return new ChromeDriver(
+        ChromeDriverService defaultService = ChromeDriverService.createDefaultService();
+        ChromeDriver chromeDriver = new ChromeDriver(defaultService,
                 new ChromeOptions().merge(
                         new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless).get()
                 )
         );
+        TestParamsHolder.setChromePort(defaultService.getUrl().getPort());
+        return chromeDriver;
     }
 
     private WebDriver ie(DesiredCapabilities customCaps) {
