@@ -17,6 +17,7 @@ public interface DriverFactory {
     String IE11 = "ie11";
     String IE10 = "ie10";
     String NATIVE_APP = "native_app";
+    String EMPTY = "";
 
 
     String IOS = "ios";
