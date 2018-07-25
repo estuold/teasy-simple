@@ -1,8 +1,8 @@
 package com.wiley.elements.should;
 
-import com.wiley.elements.types.TeasyElementList;
 import com.wiley.elements.TeasyFluentWait;
 import com.wiley.elements.conditions.elements.*;
+import com.wiley.elements.types.TeasyElementList;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
@@ -46,6 +46,14 @@ public class GeneralListShould implements ListShould {
     @Override
     public void haveTexts(List<String> texts) {
         waitFor(new ElementsHaveTexts(elements, texts));
+    }
+
+    public void haveNoText() {
+        waitFor(new ElementsHaveNoText(elements));
+    }
+
+    public void containsText(String text) {
+        waitFor(new ElementsContainsText(elements, text));
     }
 
     @Override

@@ -277,11 +277,23 @@ public abstract class BaseTeasyElement implements TeasyElement, org.openqa.selen
     @Override
     public String getText() {
         try {
-            return wrappedElement.getText();
+            String text;
+            if (isInputTextField()) {
+                text = wrappedElement.getText().isEmpty() ? wrappedElement.getAttribute("value") : wrappedElement.getText();
+            } else {
+                text = wrappedElement.getText();
+            }
+            return text;
         } catch (StaleElementReferenceException e) {
             againLocate();
             return getText();
         }
+    }
+
+    private boolean isInputTextField() {
+        return wrappedElement.getTagName().equals("input")
+                && wrappedElement.getAttribute("type") != null
+                && wrappedElement.getAttribute("type").equals("text");
     }
 
     public WebElement findElement(By by) {

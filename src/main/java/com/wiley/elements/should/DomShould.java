@@ -7,7 +7,6 @@ import com.wiley.elements.conditions.element.*;
 import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
@@ -43,6 +42,14 @@ public class DomShould implements Should {
 
     public void haveAnyText() {
         waitFor(new ElementHasAnyText(element));
+    }
+
+    public void haveNoText() {
+        waitFor(new ElementHasNoText(element));
+    }
+
+    public void containsText(String text) {
+        waitFor(new ElementContainsText(element, text));
     }
 
     public void haveAttribute(String attributeName, String value) {

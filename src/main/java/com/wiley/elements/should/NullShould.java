@@ -42,6 +42,14 @@ public class NullShould implements Should {
         fluentWait.waitFor(new ElementHasText(getElement(), text));
     }
 
+    public void haveNoText() {
+        fluentWait.waitFor(new ElementHasNoText(getElement()));
+    }
+
+    public void containsText(String text) {
+        fluentWait.waitFor(new ElementContainsText(getElement(), text));
+    }
+
     public void haveAnyText() {
         fluentWait.waitFor(new ElementDisplayed(getElement()));
     }
