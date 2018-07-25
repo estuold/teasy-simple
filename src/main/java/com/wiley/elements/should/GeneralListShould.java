@@ -34,6 +34,11 @@ public class GeneralListShould implements ListShould {
     }
 
     @Override
+    public void haveSize(int expectedSize) {
+        waitFor(new ElementsHaveSize(elements, expectedSize));
+    }
+
+    @Override
     public void haveText(String text) {
         waitFor(new ElementsHaveText(elements, text));
     }
@@ -48,10 +53,12 @@ public class GeneralListShould implements ListShould {
         waitFor(new ElementsHaveTexts(elements, texts));
     }
 
+    @Override
     public void haveNoText() {
         waitFor(new ElementsHaveNoText(elements));
     }
 
+    @Override
     public void containsText(String text) {
         waitFor(new ElementsContainsText(elements, text));
     }

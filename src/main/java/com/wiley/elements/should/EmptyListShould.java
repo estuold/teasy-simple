@@ -39,6 +39,11 @@ public class EmptyListShould implements ListShould {
     }
 
     @Override
+    public void haveSize(int expectedSize) {
+        throwException();
+    }
+
+    @Override
     public void haveText(String text) {
         throwException();
     }
@@ -53,10 +58,12 @@ public class EmptyListShould implements ListShould {
         throwException();
     }
 
+    @Override
     public void haveNoText() {
         throwException();
     }
 
+    @Override
     public void containsText(String text) {
         throwException();
     }
