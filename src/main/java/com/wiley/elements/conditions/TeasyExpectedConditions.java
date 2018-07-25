@@ -3,7 +3,10 @@ package com.wiley.elements.conditions;
 import com.wiley.driver.frames.FramesTransparentWebDriver;
 import com.wiley.elements.TeasyElement;
 import com.wiley.utils.ExecutionUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +32,8 @@ public final class TeasyExpectedConditions {
         return new ExpectedCondition<WebElement>() {
             @Override
             public WebElement apply(final WebDriver driver) {
-                return searchContext.findElements(locator).isEmpty() ? null : searchContext.findElements(locator).get(0);
+                List<WebElement> els = searchContext.findElements(locator);
+                return els.isEmpty() ? null : els.get(0);
             }
 
             @Override
@@ -43,7 +47,8 @@ public final class TeasyExpectedConditions {
         return new ExpectedCondition<WebElement>() {
             @Override
             public WebElement apply(final WebDriver driver) {
-                return driver.findElements(locator).isEmpty() ? null : driver.findElements(locator).get(0);
+                List<WebElement> els = driver.findElements(locator);
+                return els.isEmpty() ? null : els.get(0);
             }
 
             @Override
@@ -57,7 +62,8 @@ public final class TeasyExpectedConditions {
         return new ExpectedCondition<List<WebElement>>() {
             @Override
             public List<WebElement> apply(final WebDriver driver) {
-                return searchContext.findElements(locator).isEmpty() ? null : searchContext.findElements(locator);
+                List<WebElement> els = searchContext.findElements(locator);
+                return els.isEmpty() ? null : els;
             }
 
             @Override
@@ -67,12 +73,12 @@ public final class TeasyExpectedConditions {
         };
     }
 
-
     public static ExpectedCondition<List<WebElement>> presenceOfAllElementsLocatedBy(final By locator) {
         return new ExpectedCondition<List<WebElement>>() {
             @Override
             public List<WebElement> apply(final WebDriver driver) {
-                return driver.findElements(locator).isEmpty() ? null : driver.findElements(locator);
+                List<WebElement> els = driver.findElements(locator);
+                return els.isEmpty() ? null : els;
             }
 
             @Override
@@ -326,7 +332,8 @@ public final class TeasyExpectedConditions {
      * Trick with zero coordinates for not-displayed element works only in FF
      */
     private static boolean isElementHiddenUnderScroll(WebElement element) {
-        return ExecutionUtils.isFF() && element.getLocation().getX() > 0 && element.getLocation().getY() > 0;
+        return ExecutionUtils.isFF() && element.getLocation().getX() > 0 && element.getLocation()
+                .getY() > 0;
     }
 
     /**
@@ -365,7 +372,6 @@ public final class TeasyExpectedConditions {
         };
     }
 
-
     public static ExpectedCondition<String> appearingOfWindowByUrl(final String url) {
         return new ExpectedCondition<String>() {
             @Override
@@ -379,7 +385,8 @@ public final class TeasyExpectedConditions {
                                 return handle;
                             }
                         } catch (UnsupportedEncodingException e) {
-                            LOGGER.error("UnsupportedEncodingException occured while decoding url - " + driver.getCurrentUrl());
+                            LOGGER.error("UnsupportedEncodingException occured while decoding url - " + driver
+                                    .getCurrentUrl());
                         }
                     }
                 }
