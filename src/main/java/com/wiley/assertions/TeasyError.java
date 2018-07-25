@@ -16,7 +16,14 @@ public class TeasyError {
     }
 
     public String getErrorMessage() {
-        String message = throwable != null && throwable.getMessage() != null ? throwable.getMessage() : throwable != null ? throwable.getCause().getMessage() : null;
+        String message;
+        if (throwable != null && throwable.getMessage() != null) {
+            message = throwable.getMessage();
+        } else if (throwable != null && throwable.getCause() != null) {
+            message = throwable.getCause().getMessage();
+        } else {
+            message = null;
+        }
 
         if (message == null) {
             message = methodType.desc() + " failed";
