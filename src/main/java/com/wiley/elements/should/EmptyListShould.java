@@ -1,8 +1,8 @@
 package com.wiley.elements.should;
 
-import com.wiley.elements.types.TeasyElementList;
 import com.wiley.elements.TeasyFluentWait;
 import com.wiley.elements.conditions.elements.ElementsAbsent;
+import com.wiley.elements.types.TeasyElementList;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
@@ -50,6 +50,14 @@ public class EmptyListShould implements ListShould {
 
     @Override
     public void haveTexts(List<String> texts) {
+        throwException();
+    }
+
+    public void haveNoText() {
+        throwException();
+    }
+
+    public void containsText(String text) {
         throwException();
     }
 
