@@ -6,6 +6,7 @@ import com.wiley.holders.TestParamsHolder;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -62,10 +63,10 @@ public class RemoteDriverFactory implements DriverFactory {
         TestParamsHolder.setPlatform(MAC);
         switch (browserName.toLowerCase().trim()) {
             case CHROME: {
-                return createRemoteDriver(new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless), CHROME);
+                return createRemoteDriver(new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless, Platform.MAC), CHROME);
             }
             case GECKO: {
-                return createRemoteDriver(new GeckoCaps(customCaps, this.alertBehaviour), GECKO);
+                return createRemoteDriver(new GeckoCaps(customCaps, this.alertBehaviour, Platform.MAC), GECKO);
             }
             case SAFARI_TECHNOLOGY_PREVIEW: {
                 return createRemoteDriver(new SafariTechPreviewCaps(customCaps), SAFARI_TECHNOLOGY_PREVIEW);
@@ -95,13 +96,13 @@ public class RemoteDriverFactory implements DriverFactory {
         TestParamsHolder.setPlatform(LINUX);
         switch (browserName.toLowerCase().trim()) {
             case CHROME: {
-                return createRemoteDriver(new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless), CHROME);
+                return createRemoteDriver(new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless, Platform.LINUX), CHROME);
             }
             case FIREFOX: {
-                return createRemoteDriver(new FireFoxCaps(customCaps, this.alertBehaviour), FIREFOX);
+                return createRemoteDriver(new FireFoxCaps(customCaps, this.alertBehaviour, Platform.LINUX), FIREFOX);
             }
             case GECKO: {
-                return createRemoteDriver(new GeckoCaps(customCaps, this.alertBehaviour), GECKO);
+                return createRemoteDriver(new GeckoCaps(customCaps, this.alertBehaviour, Platform.LINUX), GECKO);
             }
             default: {
                 return throwException(browserName, LINUX);
@@ -129,13 +130,13 @@ public class RemoteDriverFactory implements DriverFactory {
 
         switch (browserName.toLowerCase().trim()) {
             case CHROME: {
-                return createRemoteDriver(new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless), CHROME);
+                return createRemoteDriver(new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless, Platform.WINDOWS), CHROME);
             }
             case FIREFOX: {
-                return createRemoteDriver(new FireFoxCaps(customCaps, this.alertBehaviour), FIREFOX);
+                return createRemoteDriver(new FireFoxCaps(customCaps, this.alertBehaviour, Platform.WINDOWS), FIREFOX);
             }
             case GECKO: {
-                return createRemoteDriver(new GeckoCaps(customCaps, this.alertBehaviour), GECKO);
+                return createRemoteDriver(new GeckoCaps(customCaps, this.alertBehaviour, Platform.WINDOWS), GECKO);
             }
             case EDGE: {
                 return createRemoteDriver(new EdgeCaps(customCaps, this.alertBehaviour), EDGE);
