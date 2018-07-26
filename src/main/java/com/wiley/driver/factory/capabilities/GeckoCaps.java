@@ -13,10 +13,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class GeckoCaps extends TeasyCaps {
 
     private final UnexpectedAlertBehaviour alertBehaviour;
+    private final Platform platform;
 
-    public GeckoCaps(DesiredCapabilities customCaps, UnexpectedAlertBehaviour alertBehaviour) {
+    public GeckoCaps(DesiredCapabilities customCaps, UnexpectedAlertBehaviour alertBehaviour, Platform platform) {
         super(customCaps);
         this.alertBehaviour = alertBehaviour;
+        this.platform = platform;
     }
 
     public FirefoxOptions get() {
@@ -31,9 +33,7 @@ public class GeckoCaps extends TeasyCaps {
         FirefoxOptions options = new FirefoxOptions();
         options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, this.alertBehaviour);
         options.setCapability(FirefoxDriver.MARIONETTE, true);
-
-        //TODO NT we probably set a correct platform here or don't set it at all.
-        options.setCapability("platform", Platform.WINDOWS);
+        options.setCapability("platform", platform);
         options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         setLoggingPrefs(options);
         return options;

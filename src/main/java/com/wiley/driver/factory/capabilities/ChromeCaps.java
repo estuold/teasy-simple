@@ -15,11 +15,13 @@ public class ChromeCaps extends TeasyCaps {
 
     private final UnexpectedAlertBehaviour alertBehaviour;
     private final boolean isHeadless;
+    private final Platform platform;
 
-    public ChromeCaps(DesiredCapabilities customCaps, UnexpectedAlertBehaviour alertBehaviour, boolean isHeadless) {
+    public ChromeCaps(DesiredCapabilities customCaps, UnexpectedAlertBehaviour alertBehaviour, boolean isHeadless, Platform platform) {
         super(customCaps);
         this.alertBehaviour = alertBehaviour;
         this.isHeadless = isHeadless;
+        this.platform = platform;
     }
 
     public ChromeOptions get() {
@@ -32,21 +34,15 @@ public class ChromeCaps extends TeasyCaps {
 
     private ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
-
         options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, this.alertBehaviour);
-
         //To view pdf in chrome
         options.setExperimentalOption("excludeSwitches", Arrays.asList("test-type", "--ignore-certificate-errors"));
-
         if (this.isHeadless) {
             options.addArguments("headless");
         }
-
         options.setCapability(ChromeOptions.CAPABILITY, options);
         options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-
-        //TODO NT we probably set a correct platform here or don't set it at all.
-        options.setCapability("platform", Platform.WINDOWS);
+        options.setCapability("platform", platform);
         setLoggingPrefs(options);
         return options;
     }

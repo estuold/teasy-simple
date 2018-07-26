@@ -14,10 +14,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class FireFoxCaps extends TeasyCaps {
 
     private final UnexpectedAlertBehaviour alertBehaviour;
+    private final Platform platform;
 
-    public FireFoxCaps(DesiredCapabilities customCaps, UnexpectedAlertBehaviour alertBehaviour) {
+    public FireFoxCaps(DesiredCapabilities customCaps, UnexpectedAlertBehaviour alertBehaviour, Platform platform) {
         super(customCaps);
         this.alertBehaviour = alertBehaviour;
+        this.platform = platform;
     }
 
     public FirefoxOptions get() {
@@ -33,7 +35,7 @@ public class FireFoxCaps extends TeasyCaps {
         options.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, this.alertBehaviour);
         options.setCapability(FirefoxDriver.MARIONETTE, false);
         options.setCapability(FirefoxDriver.PROFILE, createFirefoxProfile());
-        options.setCapability("platform", Platform.WINDOWS);
+        options.setCapability("platform", platform);
         options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         setLoggingPrefs(options);
         return options;
