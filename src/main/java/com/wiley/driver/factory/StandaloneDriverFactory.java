@@ -7,6 +7,7 @@ import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.EdgeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import io.github.bonigarcia.wdm.InternetExplorerDriverManager;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -66,13 +67,13 @@ public class StandaloneDriverFactory implements DriverFactory {
         TestParamsHolder.setPlatform(LINUX);
         switch (browserName.toLowerCase().trim()) {
             case CHROME: {
-                return chrome(customCaps);
+                return chrome(customCaps, Platform.LINUX);
             }
             case FIREFOX: {
-                return firefox(customCaps);
+                return firefox(customCaps, Platform.LINUX);
             }
             case GECKO: {
-                return gecko(customCaps);
+                return gecko(customCaps, Platform.LINUX);
             }
             default: {
                 return throwException(browserName, LINUX);
@@ -84,13 +85,13 @@ public class StandaloneDriverFactory implements DriverFactory {
         TestParamsHolder.setPlatform(MAC);
         switch (browserName.toLowerCase().trim()) {
             case CHROME: {
-                return chrome(customCaps);
+                return chrome(customCaps, Platform.MAC);
             }
             case FIREFOX: {
-                return firefox(customCaps);
+                return firefox(customCaps, Platform.MAC);
             }
             case GECKO: {
-                return gecko(customCaps);
+                return gecko(customCaps, Platform.MAC);
             }
             case SAFARI_TECHNOLOGY_PREVIEW: {
                 return safariTechnologyPreview();
@@ -105,13 +106,13 @@ public class StandaloneDriverFactory implements DriverFactory {
         TestParamsHolder.setPlatform(WINDOWS);
         switch (browserName.toLowerCase().trim()) {
             case FIREFOX: {
-                return firefox(customCaps);
+                return firefox(customCaps, Platform.WINDOWS);
             }
             case GECKO: {
-                return gecko(customCaps);
+                return gecko(customCaps, Platform.WINDOWS);
             }
             case CHROME: {
-                return chrome(customCaps);
+                return chrome(customCaps, Platform.WINDOWS);
             }
             case EDGE: {
                 return edge(customCaps);
@@ -129,32 +130,32 @@ public class StandaloneDriverFactory implements DriverFactory {
         throw new RuntimeException("Not supported browser: " + browserName + ", for platform: " + platformName);
     }
 
-    private WebDriver firefox(DesiredCapabilities customCaps) {
+    private WebDriver firefox(DesiredCapabilities customCaps, Platform platform) {
         DriverHolder.setDriverName(FIREFOX);
         return new FirefoxDriver(
                 new FirefoxOptions(
-                        new FireFoxCaps(customCaps, this.alertBehaviour).get()
+                        new FireFoxCaps(customCaps, this.alertBehaviour, platform).get()
                 )
         );
     }
 
-    private WebDriver gecko(DesiredCapabilities customCaps) {
+    private WebDriver gecko(DesiredCapabilities customCaps, Platform platform) {
         DriverHolder.setDriverName(GECKO);
         FirefoxDriverManager.getInstance().setup();
         return new FirefoxDriver(
                 new FirefoxOptions(
-                        new GeckoCaps(customCaps, this.alertBehaviour).get()
+                        new GeckoCaps(customCaps, this.alertBehaviour, platform).get()
                 )
         );
     }
 
-    private WebDriver chrome(DesiredCapabilities customCaps) {
+    private WebDriver chrome(DesiredCapabilities customCaps, Platform platform) {
         DriverHolder.setDriverName(CHROME);
         ChromeDriverManager.getInstance().setup();
         ChromeDriverService defaultService = ChromeDriverService.createDefaultService();
         ChromeDriver chromeDriver = new ChromeDriver(defaultService,
                 new ChromeOptions().merge(
-                        new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless).get()
+                        new ChromeCaps(customCaps, this.alertBehaviour, this.isHeadless, platform).get()
                 )
         );
         TestParamsHolder.setChromePort(defaultService.getUrl().getPort());
